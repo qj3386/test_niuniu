@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>个人中心</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<style>
+.am-list .am-list-thumb img{width:24px;height:24px;}
+</style>
+{include file="common/header"/}
+</head>
+<body ontouchstart="">
+
+<div class="am-list am-list-users" style="padding:0;">
+    <div class="am-list-body">
+        <div class="am-list-item" style="padding-top:6px;padding-bottom:6px;background-color:#00cc9f;">
+            <div class="am-list-thumb"><a href="<?php echo url('user/setting'); ?>"><img style="border:1px solid #ABCDEF;" src="<?php echo $login_info['head_img']; ?>" onerror="this.src='<?php echo http_host(); ?>/images/mobile/no_user.jpg'"></a></div>
+            <div class="am-list-content">
+                <div class="am-list-title am-list-cell-twocolumn">
+                    <div class="am-list-title" style="color:#fff;margin-bottom:0;"><a style="color:#fff;" href="<?php echo url('user/setting'); ?>"><?php if ($login_info['true_name']) { echo $login_info['true_name']; } elseif ($login_info['mobile']) { echo substr_replace($login_info['mobile'],'****',3,4); } else { echo $login_info['user_name']; } ?></a>
+					<?php if (!empty($login_info['true_name']) && !empty($login_info['idcard'])) { if (!empty($login_info['user_rank_text'])) { ?><span style="color:#FFCC00;font-size:12px;"><?php if (!empty($login_info['user_rank_text'])) { echo $login_info['user_rank_text']; } ?></span><?php } } else { ?><a style="color:#FFCC00;font-size:12px;" href="{:url('user/certification')}">未认证</a><?php } ?></div>
+                    <div class="am-list-right-brief"></div>
+                </div>
+                <div class="am-list-brief" style="color:#CCFFCC;">注册时间：<?php echo date('Y-m-d', $login_info['add_time']); ?></div>
+            </div>
+            <a href="<?php echo url('user/setting'); ?>" class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></a>
+        </div>
+    </div>
+</div>
+
+<div class="am-grid am-grid-col-3">
+  <a href="{:url('user_money/index')}" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title"><?php echo $login_info['money']; ?></div>
+      <div class="am-grid-item-desc">账户余额</div>
+    </div>
+  </a>
+  <a href="{:url('user_project_income/index')}" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title"><?php echo $login_info['consumption_income']; ?></div>
+      <div class="am-grid-item-desc">累计收益</div>
+    </div>
+  </a>
+  <a href="{:url('user_project/index')}" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title">{$principal_recovered}</div>
+      <div class="am-grid-item-desc">待收本金</div>
+    </div>
+  </a>
+</div>
+
+<div class="am-grid am-grid-col-3" style="margin-top:10px;">
+  <a href="{:url('user_withdraw/add')}" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="margin-bottom:8px;">
+        <img src="/images/mobile/icon_qq6.png" />
+    </div>
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title">提现</div>
+    </div>
+  </a>
+  <a href="<?php echo url('user/signin'); ?>" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="margin-bottom:8px;">
+        <img src="/images/mobile/icon_nav4.png" />
+    </div>
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title">签到</div>
+    </div>
+  </a>
+  <a href="{:url('user_recharge/add')}" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="margin-bottom:8px;">
+        <img src="/images/mobile/icon_nav11.png" />
+    </div>
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title">充值</div>
+    </div>
+  </a>
+</div>
+
+<div class="am-list" style="padding-bottom:0;">
+    <div class="am-list-body ">
+        <a href="<?php echo url('user/account'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_fund.png" alt=""></div>
+            <div class="am-list-content">资金管理</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user_project/index'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_invest.png" alt=""></div>
+            <div class="am-list-content">领养记录</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user_project_income/index'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_inter.png" alt=""></div>
+            <div class="am-list-content">收益记录</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user_recharge/index'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_rech.png" alt=""></div>
+            <div class="am-list-content">充值记录</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user_withdraw/index'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_cash.png" alt=""></div>
+            <div class="am-list-content">提现记录</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user_message/index'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/icon_message.png" alt=""></div>
+            <div class="am-list-content">消息通知</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+    </div>
+</div>
+
+<div class="am-list" style="padding-bottom:0;">
+    <div class="am-list-body ">
+        <a href="<?php echo url('user/setting'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_safe.png" alt=""></div>
+            <div class="am-list-content">账户安全</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user/certification'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_cert.png" alt=""></div>
+            <div class="am-list-content">实名认证</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <a href="<?php echo url('user/bind_bank_card'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_card.png" alt=""></div>
+            <div class="am-list-content">银行卡绑定</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+    </div>
+</div>
+
+<div class="am-list" style="padding-bottom:0;">
+    <div class="am-list-body ">
+        <a href="<?php echo url('user/referral'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_invite.png" alt=""></div>
+            <div class="am-list-content">邀请好友</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+    </div>
+    <div class="am-list-body ">
+        <a href="<?php echo url('feedback/add'); ?>" class="am-list-item am-list-item-indent line-thumb">
+            <div class="am-list-thumb"><img src="/images/mobile/user_feedback.png" alt=""></div>
+            <div class="am-list-content">意见反馈</div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+    </div>
+</div>
+
+<div style="padding:15px 20px;">
+<a href="<?php echo url('login/logout'); ?>" class="am-button warn">安全退出</a>
+</div>
+
+{include file="common/footer"/}
+</body></html>

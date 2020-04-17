@@ -1,0 +1,114 @@
+.mb10{margin-bottom:10px;}.mt10{margin-top:10px;}img{border:none;border:0;margin:0;padding:0;vertical-align:middle;}
+.fl{float:left;}.fr{float:right;}.m-auto{margin:0 auto;}.cl{clear:both;}
+.daoxu{direction:rtl;unicode-bidi:bidi-override;}
+
+/* 通用 */
+/* 底部导航 */
+.foohi{height:52px;}
+.footer{left:0px;bottom:0px;width:100%;position:fixed;z-index:99999;border-top:1px solid #efefef;background:#fafbfe;}
+.footer li{width:20%;float:left;padding:5px 0px;text-align:center;}.footer li a{display:block;}
+.footer li img{height:24px;}
+.footer li p{color:#888888;font-size:12px;line-height:16px;}
+.footer .on p{color:#1edeb4;}
+
+/* 顶部标题 */
+.classreturnbox{height:47px;}
+.classreturn{left:0px;top:0px;width:100%;position:fixed;z-index:99999;color:#111;background-color:#fff;border-bottom:1px solid #efefef;height:46px;line-height:46px;}
+.classreturn .return{position:absolute;left:10px;}
+.classreturn .return a{overflow:hidden;display:block;}
+.classreturn .return a img{width:24px;height:24px;}
+.classreturn .tit{font-size:18px;padding-left:42px;}
+.classreturn .nav_menu{position:absolute;right:15px;}
+.classreturn .nav_menu a{display:block;color:#999;}
+.classreturn .nav_menu img{width:24px;}
+.classreturn .ds-in-bl{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;}
+
+/* 首页 */
+
+/* 理财项目列表 */
+.tier{position:relative;text-decoration: none;color: black;margin-bottom:10px;display: inline-block;width: 100%;background-color: #fff;}
+.tier .img-box img{width:100%;height:50vw;}
+.tier .info-box{ padding:5px;font-size:3vw;position:relative; /* box-sizing:border-box;border:1px solid #e7e7e7;border-radius:3px; */ }
+.tier .info-box .over{display:block;position:absolute;right:10px;bottom:10px;width:100px;height:100px;}
+.tier .ib-head {padding:1px 0px 6px 0;font-size: 4.3vw;border-bottom: 1px solid #e7e7e7;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.tier .ib-head .index {background: #54a500;width: 7vw;height: 7vw;display: inline-block;text-align: center;line-height: 7vw;color: white;border-radius: 3.5vw;margin: 0px 2vw;}
+.tier .ib-doc {font-size: 4.3vw;border-bottom: 1px solid #e7e7e7;padding: 5vw 4vw;}
+.tier .ib-body {display: flex;justify-content: space-between;text-align: center;padding: 0px 4vw;}
+.tier .ib-body .red {color: #dc4c43;font-size: 5vw;}
+.tier .ib-body .cl-3 {padding: 1.5vw 0px;}
+.tier .ib-body .cl-3 p{margin: 1vw 0px;}
+.tier .ib-foot {padding: 0px 4vw;display: flex;justify-content: space-between;}
+.tier .ib-foot p {color: #ccc6c6;margin: 0.5vw 0px;font-size: 3.5vw;}
+.tier .ib-foot .now-btn {margin-top: 1vw;background: #108ee9;border: none;color: white;font-size: 3.5vw;width: 25vw;height: 8vw;border-radius: 1vw;}
+.tier .plan {display: flex;font-size: 3vw;padding: 0px 4vw;align-items: center;color: #666666c9;justify-content: space-between;}
+.tier .plan-wrap {width: 56vw;height: 0.9vw;border-radius: 0.45vw;background: #e7e7e7;}
+.tier .plan-con {height: 100%;border-radius: 0.45vw;background: #108ee9;}
+.tier .plan-text {margin-left: 0.5vw;font-size: 4.5vw;}
+
+/* 理财项目详情 */
+.details_top{padding:10px 15px 10px 15px;background:#ffffff;}
+.details_top .cover{width:100%;height:50vw;display:block;margin:6px 0 0 0;}
+.details_top h1{font-size:20px;font-weight:400;padding:6px 0;}
+.details_top ul li{border-top:1px solid #efefef;padding:10px 0;font-size:16px;color:#333;line-height:1.5;}
+.details_top ul li .inner{padding:6px 15px;background:#f5f5f5;display:-webkit-flex;display:flex;justify-content:space-between;}
+.details_top ul li .inner .span1{display:block;line-height:1.8;color:#000;font-size:14px;text-align:center;}
+.details_top ul li .inner .span2{display:block;line-height:1.8;font-size:16px;color:#999;text-align:center;}
+.details_top ul li .inner p i{font-style:normal;color:#dc4c43;font-size:18px;}
+
+.progressBox1{background:#e7e7e7;height:18px;border-radius:5px;margin-top:10px;position:relative;}
+.progressBox1 .progress1{height:100%;background:#108ee9;border-radius:5px;}
+.progressNum1{position:absolute;color:#ffffff;font-size:14px;left:4px;top:0px;}
+
+.tab-pane .table{border-collapse:collapse;width:100%;border-top:1px solid #333;border-left:1px solid #333;}
+.tab-pane .table td{padding:8px 10px;line-height:1.5;color:#666;font-size:16px;border-right:1px solid #333;border-bottom:1px solid #333;vertical-align:middle;}
+.tab-pane .table tr td:first-child{width:30%;text-align:center;}
+.tab-pane .table td span{color:#000;font-size:16px;}
+.tab-pane .table td i{font-style:normal;font-size:16px;color:red;}
+
+/* 通用列表 */
+.com_moduleList{}
+.com_moduleList .cml_title{height:.4rem;padding:.1rem .12rem;box-sizing:border-box;background-color:#f7f7f7;}
+.com_moduleList .cml_title span{border-left:.04rem solid #00cc9f;padding-left:.05rem;}
+.com_moduleList .cml_content{padding:.1rem .12rem;}
+.com_mdoule{padding:.1rem;background-color: #fff;box-shadow:0 0 .06rem rgba(0,0,0,0.1);-webkit-box-shadow:0 0 0.06rem rgba(0,0,0,0.1);border-radius:.1rem;}
+.com_mdoule .c_m_img{position: relative; float:left;width:1rem;height:1rem;overflow:hidden;border-radius:.1rem;}
+.com_mdoule .c_m_img img{display:block;width:100%;height:100%;}
+.com_mdoule .c_m_img .c_m_i_name {position: absolute;left: 0;bottom: 0;width: 100%;height: .22rem;line-height: .22rem;color: #fff;background-color: rgba(0, 0, 0, .4);text-align: center;font-size: .12rem;}
+.com_mdoule .c_m_img .icon_label {padding: 0 .02rem;color: #fff;line-height: .12rem;margin-right: .02rem;border-radius: .03rem;margin-top: .05rem;}
+.com_mdoule .c_m_img .icon_label.type_1 { background: linear-gradient(#ff6f72, #fe393f); background: -webkit-linear-gradient(#ff6f72, #fe393f); }
+.com_mdoule .c_m_img .icon_label.type_2 {background: linear-gradient(#ff7113, #ff3101);background: -webkit-linear-gradient(#ff7113, #ff3101);}
+.com_mdoule .c_m_content{margin-left:1.1rem;}
+.com_mdoule .c_m_label{padding:.03rem 0 .05rem 0;}
+.com_mdoule .c_m_label img{display:block;height:.2rem;}
+.com_mdoule .c_m_item{line-height:1.6;padding-bottom:.05rem;}
+.com_mdoule .c_m_item .info{color:#999;}
+.com_mdoule .c_m_item .info .price{color:#ff3439;font-size:.22rem;}
+.com_mdoule .c_m_item .info .text{}
+.com_mdoule .c_m_item .info.type_2 .text,.com_mdoule .c_m_item .info.type_2 .price{color:#333;}
+.com_mdoule .c_m_btn{text-align:center;line-height:.34rem;background-color:#00cc9f;color:#fff;font-size:.18rem;border-radius:.04rem;}
+.com_mdoule + .com_mdoule{margin-top:.1rem;}
+
+.aerial-list {padding:15px;color: #333;}
+.aerial-item {position: relative;display: block;color: inherit;margin-bottom:15px;background-color: #fff;border-radius: 10px;text-decoration: none;overflow: hidden;}
+.aerial-item .avatar-box {width: 100%;height: 0px;padding-bottom: 56.25%;overflow: hidden;background-size: cover;background-repeat: no-repeat;}
+.aerial-item .avatar-bg {position: absolute;top: 0px;width: 100%;padding-bottom: 56.25%;background-color: rgba(0, 0, 0, .2);background-image: url(../../images/mobile/playvideo.png);background-repeat: no-repeat;background-position: center;background-size: 25%;opacity: .5;}
+.aerial-item .txt {padding:5px 10px;}
+.aerial-item .desc {color: #999;font-size: 80%;}
+
+/* 单行文字溢出虚点显示 */
+.ell{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+.flex{display:flex;-webkit-display:flex;}
+.flex .flex_1{width:0;flex:1;-webkit-flex:1;align-items:center;justify-content:space-between;}
+.flex .flex_2{width:0;flex:2;-webkit-flex:2;align-items:center;justify-content:space-between;}
+.flex .flex_3{width:0;flex:3;-webkit-flex:3;align-items:center;justify-content:space-between;}
+
+
+
+
+
+
+
+
+
+
+

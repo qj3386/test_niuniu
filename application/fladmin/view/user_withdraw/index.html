@@ -1,0 +1,109 @@
+{extend name="public/base" /}
+{block name="title"}提现申请列表{/block}
+
+{block name="content"}
+<script language="javascript" type="text/javascript" src="<?php echo http_host(); ?>/js/My97DatePicker/WdatePicker.js"></script>
+<h3 class="sub-header">提现申请列表 <small class="badge"><?php echo $list->total(); ?> 条</small></h3>
+<div>今日提现人数：<font color="red">{$withdraw_people_today}</font>人 今日累计提现金额：￥<font color="red">{$cumulative_amount_today}</font>元 总累计：￥<font color="red"><?php echo round(sysconfig('CMS_CUMULATIVE_WITHDRAWAL'), 2); ?></font>元</div>
+
+<form name="listarc" action="" method="get">
+<div class="panel panel-default" style="margin:10px 0;">
+<div class="bg-info" style="padding:10px;">
+    <div class="form-inline" style="display:inline;float:left;">
+        <div class="form-group">
+            <label for="order_sn">起止时间:</label>
+            <input id="start_date" name="start_date" autocomplete="off" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" size="10" type="text" class="form-control" placeholder="开始时间">
+        </div>
+        <div class="form-group">
+            <label for="name">-</label>
+            <input id="end_date" name="end_date" autocomplete="off" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" size="10" type="text" class="form-control" placeholder="结束时间">
+        </div>
+        <button type="submit" class="btn btn-success">查询</button>
+		
+		<div class="form-group" style="margin-left:100px;"><input type="text" name="keyword" id="keyword" class="form-control required" placeholder="搜索关键词..."></div>
+		<button type="submit" class="btn btn-info" value="Submit">搜索一下</button>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+</div>
+
+<div class="panel panel-default">
+<div class="table-responsive"><table class="table table-striped table-hover">
+<thead><tr class="info">
+<th>ID</th>
+<th>用户名</th>
+<th>提现金额</th>
+<th>姓名</th>
+<th>收款账号</th>
+<th>申请时间</th>
+<th>备注</th>
+<th>状态</th>
+<th>操作</th>
+</tr></thead>
+<tbody>
+<?php if($list){foreach($list as $row){ ?><tr>
+<td><?php echo $row['id']; ?></td>
+<td><a href="{:url('index')}?user_id=<?php echo $row['user_id']; ?>"><?php echo mobile_number_encrypt($row['user']['mobile']); ?></a></td>
+<td><font color="red"><?php echo $row['money']; ?></font></td>
+<td><a href="{:url('user/edit')}?id=<?php echo $row['user_id']; ?>"><?php echo $row['name']; ?></a></td>
+<td>卡号：<?php echo $row['account']; if($row['bank_name']){echo '<br>银行名称：'.$row['bank_name'];}if($row['bank_place']){echo '<br>开户行：'.$row['bank_place'];} ?></td>
+<td><?php echo date('Y-m-d H:i:s', $row['add_time']); ?></td>
+<td style="width:220px;word-wrap:break-word;white-space:normal;word-break:break-all;">{$row['re_note']|default="-"}</td>
+<td><a href="{:url('index')}?status=<?php echo $row['status']; ?>" style="<?php if ($row['status'] == 2) { echo 'color:green;'; } elseif ($row['status'] == 4) { echo 'color:red;'; } ?>"><?php echo $row['status_text']; ?></a></td>
+<td><a href="{:url('user_money/index')}?user_id=<?php echo $row['user_id']; ?>">流水记录</a> <a href="<?php echo url('user_project/index').'?user_id=' . $row['user_id']; ?>">投资记录</a> <?php if($row['status']==0 || $row['status']==1){ ?><a href="javascript:change_status(<?php echo $row['id']; ?>,'1');">成功</a>&nbsp;<a href="javascript:refuse_withdraw(<?php echo $row['id']; ?>);">拒绝</a> <?php if ($row["is_ignore"] == 0) { ?><a onclick="delconfirm('{:url('ignore')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">忽略</a><?php } ?><?php } ?></td>
+</tr><?php }} ?>
+</tbody></table></div><!-- 表格结束 --></div></form><!-- 表单结束 -->
+
+<div class="backpages">{$page}</div>
+
+<script>
+function change_status(id,type)
+{
+    //询问框
+    layer.confirm('您确定要执行此操作吗？', {
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        var url = window.location.href;
+        $.post('<?php echo url('user_withdraw/change_status'); ?>',{id:id,type:type},function(res){
+            //提示层
+            layer.msg(res.msg, {
+                time: 2000, //2s后自动关闭
+            });
+			
+			if(res.code==0)
+            {
+                setTimeout(function(){ location.href = url; }, 1000);
+            }
+            else
+            {
+                
+            }
+            
+        });
+    }, function(){
+        
+    });
+}
+
+function refuse_withdraw(id)
+{
+	//prompt层
+	layer.prompt({title: '请输入说明', formType: 2}, function(text, index){
+		var url = window.location.href;
+        $.post('<?php echo url('user_withdraw/change_status'); ?>',{id:id,type:0,re_note:text},function(res){
+            //提示层
+            layer.msg(res.msg, {
+                time: 2000, //2s后自动关闭
+            });
+			
+			if (res.code == 0) {
+				layer.close(index);
+                setTimeout(function(){ location.href = url; }, 1000);
+            } else {
+                
+            }
+        });
+	});
+}
+</script>
+{/block}

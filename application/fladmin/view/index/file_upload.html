@@ -1,0 +1,40 @@
+{extend name="public/base" /}
+{block name="title"}其它设置{/block}
+
+{block name="content"}
+<h2 class="sub-header">文件上传</h2>
+
+<table class="table table-striped table-bordered"><tbody>
+    <tr>
+        <td align="right" style="vertical-align:middle;width:150px;">单文件上传：</td>
+        <td style="vertical-align:middle;"><button type="button" onclick="upload_file();">选择文件</button> <input name="file_path" type="text" id="file_path" value="" style="width:40%"></td>
+    </tr>
+</tbody></table>
+<form id="myform" action="<?php echo get_api_url_address() . '/image/image_upload'; ?>" method="post" enctype="multipart/form-data">
+	<input id="fileupload" type="file" name="file" style="display:none;">
+</form>
+<script type="text/javascript" src="/js/jquery-form.js"></script>
+<script type="text/javascript">
+function upload_file()
+{
+    $('#fileupload').trigger('click');
+}
+
+$(function(){
+    $("#fileupload").change(function(){
+		$("#myform").ajaxSubmit({
+			dataType: 'json',
+			success: function(res) {
+				console.log(res);
+				if (res.code == 0 && res.data.length != 0) {
+					$('#file_path').attr('value', res.data[0].path);
+				}
+			},
+			error:function(res){
+				//files.html(res.responseText);
+			}
+		});
+	});
+});
+</script>
+{/block}

@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo $title; if ($list['current_page'] != 1) { echo '-第' . $list['current_page'] . '页'; } ?></title>
+<link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/style-keji.css"><script src="/js/jquery.min.js"></script><script src="/js/bootstrap.min.js"></script></head><body>
+
+{include file="common/header"/}
+
+<div class="container" style="margin-top:20px;">
+<img class="d-banner" src="/images/pc/jumbotron.jpg" alt="banner">
+
+<h1 class="title"><?php echo $post['name']; ?></h1>
+<div class="row"><div class="col-md-1"></div><div class="col-md-10">
+<?php if($list['data']){foreach($list['data'] as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<strong class="tit"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
+<div class="info"><span class="fl"><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }}else{echo '<div style="text-align:center;padding:20px;">暂无记录</div>';} ?>
+
+<div class="bootstrap-front-pagination"><?php echo $page; ?><div class="cl"></div></div>
+</div><div class="col-md-1"></div></div>
+</div>
+
+{include file="common/footer"/}</body></html>

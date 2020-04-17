@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>收益计算器</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">收益计算器</span></div>
+</div>
+</div>
+
+<form id="myform" method="post" action="" role="form">
+<div class="am-list am-list-form">
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">投资金额(元)</div>
+		<div class="am-list-control">
+			<input id="money" maxlength="7" type="text" placeholder="<?php if ($money) { echo $money . '元起，递增1元'; } else { echo '期望投资金额'; } ?>" value="">
+		</div>
+	</div>
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">投资期限(日)</div>
+		<div class="am-list-control">
+			<input id="term" maxlength="3" type="text" placeholder="期望投资期限" value="{$term}" <?php if ($money) { echo ' readonly="readonly"'; } ?>>
+		</div>
+	</div>
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">日化利率(%)</div>
+		<div class="am-list-control">
+			<input id="daily_interest" maxlength="5" type="text" placeholder="期望日化利率" value="{$daily_interest}" <?php if ($money) { echo ' readonly="readonly"'; } ?>>
+		</div>
+	</div>
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">还款方式</div>
+		<div class="am-list-control">
+			<select id="dividend_mode" class="dividend_mode" <?php if ($money) { echo ' disabled="disabled"'; } ?>>
+				<option value="0" <?php if ($dividend_mode == 0) { echo 'selected="selected"'; } ?>>到期还本还息</option>
+				<option value="1" <?php if ($dividend_mode == 1) { echo 'selected="selected"'; } ?>>每日收益，到期还本</option>
+				<option value="7" <?php if ($dividend_mode == 7) { echo 'selected="selected"'; } ?>>每周返息，到期还本</option>
+				<!-- <option value="10000" <?php if ($dividend_mode == 10000) { echo 'selected="selected"'; } ?>>每日复利，保本保息</option> -->
+			</select>
+		</div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</div>
+	<?php if ($money) { ?>
+	<div class="am-button-group" role="group" aria-label="" style="background-color:transparent;padding:15px 20px;">
+	  <button type="button" class="am-button blue c_cpmbuttons">计算收益</button>
+	</div>
+	<?php } else { ?>
+	<div class="am-button-group" role="group" aria-label="" style="background-color:transparent;padding:15px 20px;">
+	  <button onclick="reset_form()" type="button" class="am-button white">重置</button>
+	  <button type="button" class="am-button blue c_cpmbuttons">计算收益</button>
+	</div>
+	<?php } ?>
+</div>
+</form>
+
+<style>
+#calculator_list{display:table;width:100%;}
+#calculator_list dd{width:20%;height:36px;line-height:36px;border-bottom:1px solid #ddd;text-align:center;font-size:16px;color:#333;float:left;}
+#calculator_list dl.c_dd_titlecpm dd {background:#f1f1f1;border-top:1px solid #ddd;}
+</style>
+<div style="margin:10px;border-left:1px solid #ddd;border-right:1px solid #ddd;"><ul id="calculator_list"></ul></div>
+
+<script>
+function reset_form() {
+	$("#calculator_list").html("");
+	$("#money").val("");
+	$("#term").val("");
+	$("#daily_interest").val("");
+}
+
+$().ready(function(){
+	$(".c_cpmbuttons").click(function() {
+	    var money = $("#money").val();
+	    var term = $("#term").val();
+	    var daily_interest = $("#daily_interest").val();
+	    var dividend_mode = $("#dividend_mode").val();
+		
+		if (money == "") {
+			layer.open({
+				content: '请输入投资金额'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+	    }
+		
+		if (term == "") {
+			layer.open({
+				content: '请输入投资期限'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+	    }
+		
+		if (daily_interest == "") {
+			layer.open({
+				content: '请输入日化收益'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+	    }
+		
+		if (money > 5000000) {
+			layer.open({
+				content: '投资金额最高为5000000元'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		} else if (money <= 0) {
+			layer.open({
+				content: '投资金额格式不正确'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		}
+		
+		if (term > 999) {
+			layer.open({
+				content: '投资期限最高为999天'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		} else if (term <= 0) {
+			layer.open({
+				content: '投资期限格式不正确'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		}
+		
+		if (daily_interest > 30) {
+			layer.open({
+				content: '日化收益最高30%'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		} else if (daily_interest <= 0) {
+			layer.open({
+				content: '日化收益格式不正确'
+				,skin: 'msg'
+				,time: 2
+			});
+			
+			return false;
+		}
+		$.post('{:url("index/interest_calculation")}',{money:money,term:term,daily_interest:daily_interest,dividend_mode:dividend_mode},function(res)
+		{
+			console.log(res);
+			if(res.code == 0) {
+				var html = '<li><dl class="c_dd_titlecpm"><dd>收款日期</dd><dd>收款金额</dd><dd>收回本金</dd><dd>收回利息</dd><dd class="c_cpmlastdd">剩余本金</dd></dl></li>';
+				if (res.data) {
+				    var data = res.data;
+					for (i = 0; i < data.length; i++) { 
+						html += '<li><dl class="c_dd_titlecpm"><dd>' + data[i].collection_date + '</dd><dd>' + data[i].amount_received + '</dd><dd>' + data[i].recover_principal + '</dd><dd>' + data[i].interest + '</dd><dd class="c_cpmlastdd">' + data[i].remaining_principal + '</dd></dl></li>';
+					}
+					$("#calculator_list").html(html);
+				}
+			}
+		},'json');
+	});
+});
+</script>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

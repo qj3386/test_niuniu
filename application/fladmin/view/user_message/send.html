@@ -1,0 +1,19 @@
+{extend name="public/base" /}
+{block name="title"}发送站内信{/block}
+
+{block name="content"}
+<h2 class="sub-header">发送站内信</h2>[ <a href="{:url('index')}">站内信列表</a> ]<br><br>
+
+<form id="addarc" method="post" action="{:url('send')}" role="form" enctype="multipart/form-data" class="table-responsive">{:token()}
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td align="right" style="vertical-align:middle;">发送内容：</td>
+        <td><textarea name="text" rows="5" id="text" style="width:50%;height:70px;vertical-align:middle;"></textarea></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">提交(Submit)</button></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+
+{/block}

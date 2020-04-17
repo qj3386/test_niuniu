@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>意见与反馈</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">意见与反馈</span></div>
+</div>
+</div>
+
+<style>
+.adr_add{margin:0 15px;}
+.adr-form-group{margin-top:15px;}
+.adr-form-group input[type=text],.adr-form-group textarea{display: block;width: 100%;font-size:16px;padding:10px;color: #777;vertical-align: middle;background-color: #fff;background-image: none;border: 1px solid #ddd;border-radius: 0;box-sizing:border-box;}
+.adr-form-group select{padding:5px;margin-right:10px;}
+</style>
+<form id="myform" method="post" action="{:url('feedback/add')}" role="form">{:token()}
+<div class="adr_add">
+<div class="adr-form-group">
+问题类型：
+<select id="type" name="type">
+<option value ="投资问题">投资问题</option>
+<option value ="项目建议">项目建议</option>
+<option value ="登录/注册">登录/注册</option>
+<option value ="认证问题">认证问题</option>
+<option value ="售后服务">售后服务</option>
+<option value ="充值/提现">充值/提现</option>
+<option value ="其它建议">其它建议</option>
+</select>
+</div>
+<div class="adr-form-group">
+  <label for="doc-ta-1" style="border-left:2px solid #108ee9;padding-left:6px;margin-bottom:2px;">反馈内容(必填)</label>
+  <textarea style="margin-top:4px;" name="content" class="" rows="3" id="content" placeholder="提优质意见可得大礼哦"></textarea>
+</div>
+
+<div class="adr-form-group">
+  <label for="doc-ipt-mobile-1" style="border-left:2px solid #108ee9;padding-left:6px;margin-bottom:2px;">您的联系方式(选填)</label>
+  <input style="margin-top:4px;" type="text" name="mobile" class="" id="mobile" placeholder="输入手机号码" value="">
+</div>
+</div>
+<div style="padding:15px;">
+<a href="javascript:dosubmit();" class="am-button">提交</a>
+</div>
+</form>
+
+<script type="text/javascript" src="<?php echo http_host(); ?>/js/layer/mobile/layer.js"></script>
+<script>
+function dosubmit()
+{
+	var type = $("#type").val();
+	var mobile = $("#mobile").val();
+	var content = $("#content").val();
+
+    if (type == '') {
+        layer.open({
+            content: '问题类型必填'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+
+    if (content == '') {
+        layer.open({
+            content: '反馈内容不能为空'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+
+    if(mobile != '' && !(/^1(3|4|5|6|7|8|9)\d{9}$/.test(mobile))){
+        layer.open({
+            content: '手机号格式不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false; 
+    }
+
+    $("#myform").submit();
+}
+</script>
+</body></html>

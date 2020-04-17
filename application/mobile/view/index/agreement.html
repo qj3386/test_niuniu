@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>投资协议</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<style type="text/css">
+body{font:normal 16px/1.6em Microsoft YaHei,arial,verdana;padding:0;margin:0}
+.wrap{width:1170px;height:auto;margin:0 auto}
+@media (max-width:1200px) {.wrap{width:960px}}
+@media (max-width:992px) {.wrap{width:750px}}
+@media (max-width:767px) {.wrap{width:100%;border:none;margin:0}}
+@media (max-width:480px) {.ylb-text{padding:15px}}
+.ylb-text{padding:15px}
+.ylb-text u{padding:0 5px}
+h1{font-size:24px;line-height:2}
+h2{font-size:16px}
+.center{text-align:center}
+.table{margin:10px auto;width:96%;text-align:center;border-left:1px solid #ddd;border-top:1px solid #ddd;}
+.table thead tr td,.table tbody tr td{border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:4px 0;}
+</style>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="background-color:#fff;">
+
+<div class="wrap">
+<div class="ylb-text">
+    <h1 class="center">项目投资协议</h1>
+    <p>项目编号：<u><?php echo $post['title']; ?></u></p>
+    <p>本投资协议（“本协议”）由以下双方于 <strong><u><?php echo date('Y年m月d日',$post['add_time']); ?></u></strong> 签订：</p>
+    <p>甲方（<?php echo sysconfig('CMS_WEBNAME'); ?>）：<strong><u><?php echo sysconfig('CMS_WEBNAME'); ?></u></strong></p>
+    <p>乙方（投资人）：<strong> <u><?php echo $login_info['true_name']; ?></u></strong></p>
+    <p>银行账号：<strong> <u><?php echo $login_info['bank_card_number']; ?></u></strong></p>
+    <p>用户名 ：<strong> <u><?php echo $login_info['mobile']; ?></u></strong></p>
+    <table cellpadding="0" cellspacing="0" class="table">
+      <thead>
+        <tr>
+          <td>平台用户名</td>
+          <td>投资金额(元)</td>
+          <td>投资期限(天)</td>
+          <td>到期应收利息(元)</td>
+          <td>到期应收本金(元)</td>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- 获取数据 -->
+        <tr>
+          <td><?php echo $login_info['mobile']; ?></td>
+          <td><?php echo $post['money']; ?></td>
+          <td><?php echo $post['term']?></td>
+          <td><?php echo round($post['money'] * $post['daily_interest'] * $post['term'] * 0.01, 2);?></td>
+          <td><?php echo $post['money']; ?></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>甲方（<?php echo sysconfig('CMS_WEBNAME'); ?>）：<?php echo sysconfig('CMS_COMPANY_NAME'); ?>，住所：<?php echo sysconfig('CMS_COMPANY_ADDRESS'); ?></p>
+    <p>就乙方通过由甲方运营管理的<?php echo sysconfig('CMS_WEBNAME'); ?>理财平台（域名:<?php echo http_host(); ?>，“<?php echo sysconfig('CMS_WEBNAME'); ?>”）进行其公司运营操作的产品项目投资意愿、双方根据平等、自愿的原则，达成本协议如下：</p>
+    <h4>一、 收益金额、期限 、返款方式</h4>
+    <p>1.1 甲方同意通过<?php echo sysconfig('CMS_WEBNAME'); ?>理财平台接收乙方投资金额如下，乙方同意通过<?php echo sysconfig('CMS_WEBNAME'); ?>理财平台向甲方投资金额、收益、返款方式。</p>
+    <table cellpadding="0" cellspacing="0" class="table">
+      <thead>
+        <tr>
+          <td>平台用户名</td>
+          <td>投资金额(元)</td>
+          <td>投资期限(天)</td>
+          <td>到期应收利息(元)</td>
+          <td>到期应收本金(元)</td>
+          <td>返款时间</td>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- 获取数据 -->
+        <tr>
+          <td><?php echo $login_info['mobile']; ?></td>
+          <td><?php echo $post['money']; ?></td>
+          <td><?php echo $post['term']?></td>
+          <td><?php echo round($post['money'] * $post['daily_interest'] * $post['term'] * 0.01, 2);?></td>
+          <td><?php echo $post['money']; ?></td>
+          <td><?php echo date("Y-m-d", ($post['add_time'] + 3600 * 24)); ?>至<?php echo date("Y-m-d", ($post['add_time'] + 3600 * 24 * $post['term'])); ?></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>二、 投资流程</h2>
+    <p>2.1 本协议成立：甲方首先在<?php echo sysconfig('CMS_WEBNAME'); ?>理财网站上发布相关的投资产品项目收益，乙方按照<?php echo sysconfig('CMS_WEBNAME'); ?>理财的规则，通过在<?php echo sysconfig('CMS_WEBNAME'); ?>理财网站上相关的投资产品项目收益，按钮确认投资时，本协议下所约定的关系即成立，本协议的签署关系同时成立。</p>
+    <P>2.2 投资资金冻结：乙方点击“立即投资”按钮即视为其已经向甲方发出不可撤销的授权指令，授权甲方全权处理和操作本次的投资金额（“乙方<?php echo sysconfig('CMS_WEBNAME'); ?>理财账户”）中的冻结金额等同于本协议投资的本金数额”的资金。上述冻结在本协议生效时或本协议确定失效时（项目周期结束）解除。</P>
+    <p>2.3 投资资金变更：本协议生效的同时，甲方即不可撤销乙方所投资的金额，本金额等同于本协议第一条所列的“收益金额、期限 、返款方式”</p>
+    <h2>三、 投资资金来源保证</h2>
+    <p>3.1 乙方保证其所用于投资资金来源合法，乙方是该资金的合法所有人，如果合法性问题(如盗用他人的银行卡，信用卡等)发生争议，由乙方自行负责解决。如乙方未能解决，因乙方资金安全问题导致账户被相关司法机关冻结或者执行，
+    由乙方自行负责解决相关司法问题。</p>
+    <h2>四、 本息返还方式</h2>
+    <p>4.1 甲方同意并承诺，乙方所投资金的收益金额、期限 、返款方式的执行，甲方负责对乙方所投资金额的收益金额和返款时间的保证，甲方必须按照本协议的约定
+    按时间全额的将其返还到乙方的帐户中。</p>
+    <p>4.2 甲方应在每周期或每日规定的返款时间（每日分红和到期返本金）（不得迟于24:00）将其按照本协议第一条所述的本息，转入乙方的账户。</p>
+    <p>4.3 如果返款日遇到法定假日或公休日，返款日期时间不受影响。</p>
+    <h2>五、 违约</h2>
+    <p>5.1 如果甲方严重违反本协议的协定，如：没能按时的返还乙方的红利及本金，甲方应向乙方支付投资总金额和投资总金额10%作为违约金。乙方须保证其资金来源的合法性不得隐瞒，否则甲方有权冻结其资金移送法办。</p>
+    <p>5.2 乙方保证其提供的信息和资料的真实性，不得提供虚假资料或隐瞒。乙方提供虚假资料或者故意隐瞒，构成违约，应承担违约责任，同时本协议视为提前终止。</p>
+    <p>5.3 发生下列任何一项或几项情形的， (1) 甲方、乙方
+    任何财产遭受没收、征用、查封、扣押、冻结等可能影响其履约能力的不利事件，且不能及时提供有效补救措施的；(2) 提前终止本协议；(3) 采取法律、法规以及本协议约定的其他救济措施。</p>
+    <h2>六、 本协议未经乙方事先书面（包括但不限于电子邮件等方式）同意，甲方不得将本协议项下的任何权利义务转让给任何第三方。</h2>
+    <h2>七、 其他</h2>
+    <p>7.1 本协议在下述条件全部满足时生效：</p>
+    <p>（1）甲方和乙方在本协议（含传真件）上签字盖章、且乙方通过<?php echo sysconfig('CMS_WEBNAME'); ?>理财以网络在线点击：立即投资的方式签订；<br/>
+       （2）自甲方发布的投资项目起，乙方所投项目资金全部在<?php echo sysconfig('CMS_WEBNAME'); ?>理财账户中本金将被冻结直至项目周末结束。</p>
+    <p>7.2 本协议的任何修改、补充均须以<?php echo sysconfig('CMS_WEBNAME'); ?>理财平台电子文本形式作出。</p>
+    <p>7.3 双方均确认，本协议的签订、生效和履行以不违反法律为前提。如果本协议中的任何一条或多条违反适用的法律，则该条将被视为无效，但该无效条款并不影响本协议其他条款的效力。</p>
+    <p>7.4 如果双方在本协议履行过程中发生任何争议，应友好协商解决；如协商不成，则提交所在地的人民法院进行诉讼。</p>
+    <p>7.5 甲方保留与本协议有关的书面文件或电子信息。</p>
+    <div>
+    <div style="height:150px;line-height:150px;">
+        <span>法定代表人或授权代表（签字或盖章）</span>
+    </div>
+    <div oncontextmenu="window.event.returnValue=false" style="margin-top:-150px;">
+        <img src="<?php echo http_host() . sysconfig('CMS_AGREEMENT_SEAL_ONE'); ?>" oncontextmenu="window.event.returnValue=false" style="display:block;margin-left:100px;width:150px;height:150px;" />
+    </div>
+    </div>
+</div>
+</div>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

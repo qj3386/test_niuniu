@@ -1,0 +1,25 @@
+{extend name="public/base" /}
+{block name="title"}50天应返款明细{/block}
+
+{block name="content"}
+<h2 class="sub-header">50天应返款明细</h2>
+
+<form name="listarc"><div class="table-responsive"><table class="table table-striped table-hover">
+<thead><tr class="info">
+<th>日期</th>
+<th>应返总计(元)</th>
+<th>应返利息(元)</th>
+<th>应返本金(元)</th>
+<th>操作</th>
+</tr></thead>
+<tbody>
+<?php if ($list) { foreach ($list as $row) { ?><tr>
+<td style="width:180px;"><?php echo $row['date']; ?></td>
+<td><font color="red"><?php echo ($row['money'] + $row['amount']); ?></font></td>
+<td><?php echo $row['money']; ?></td>
+<td><?php echo $row['amount']; ?></td>
+<td><a href="<?php echo url('user_project_income/today') . '?date=' . $row['date']; ?>">详情</a></td>
+</tr><?php }} ?>
+</tbody></table></div><!-- 表格结束 --></form><!-- 表单结束 -->
+
+{/block}

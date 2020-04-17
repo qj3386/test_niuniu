@@ -1,0 +1,14 @@
+<!--底部导航-start-->
+<div class="foohi">
+<div class="footer">
+	<ul>
+    <?php $current_url = get_current_url(true); ?>
+	<li<?php if(http_host() . '/mobile' == $current_url){echo ' class="on"';} ?>><a href="<?php echo '/mobile'; ?>"><img src="<?php echo http_host(); ?>/images/mobile/icon_home<?php if(http_host() . '/mobile' == $current_url){echo '2';} ?>.png"><p>首页</p></a></li>
+    <li<?php if(url('project/index') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('project/index'); ?>"><img src="<?php echo http_host(); ?>/images/mobile/icon_statistical<?php if(url('project/index') == $current_url){echo '2';} ?>.png"><p>领养</p></a></li>
+    <li<?php if(url('video/index') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('video/index'); ?>"><img src="<?php echo http_host(); ?>/images/mobile/icon_fenlei<?php if(url('video/index') == $current_url){echo '2';} ?>.png"><p>视频</p></a></li>
+    <li<?php if(url('user/index') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('user/index'); ?>"><img src="<?php echo http_host(); ?>/images/mobile/icon_user<?php if(url('user/index') == $current_url){echo '2';} ?>.png"><p>我的</p></a></li>
+    <li><a href="<?php echo sysconfig('CMS_ONLINE_SERVICE_URL'); ?>"><img src="<?php echo http_host(); ?>/images/mobile/icon_kefu3.png"><p style="color:#ff6600;">人工客服</p></a></li>
+    </ul>
+</div>
+</div>
+<!--底部导航-end-->

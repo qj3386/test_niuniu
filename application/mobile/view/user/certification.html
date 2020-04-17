@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>实名认证</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">实名认证</span></div>
+</div>
+</div>
+<?php if (!empty($login_info['true_name']) && !empty($login_info['idcard'])) { ?>
+<div class="am-list am-list-form">
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">姓名</div>
+		<div class="am-list-control">
+			<?php echo $login_info['true_name']; ?>
+		</div>
+	</div>
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">身份证号</div>
+		<div class="am-list-control">
+            <?php echo substr_replace($login_info['idcard'],'********',4,8); ?>
+		</div>
+	</div>
+</div>
+<?php } else { ?>
+<form class="ajax_post_submit" id="myform" method="post" action="{:url('user/certification')}" role="form">{:token()}
+<input name="jump_url" type="text" value="{$jump_url}" style="display:none;">
+<div class="am-list am-list-form">
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">姓名</div>
+		<div class="am-list-control">
+			<input name="true_name" id="true_name" type="text" placeholder="请输入姓名" value="" autofocus="autofocus">
+		</div>
+	</div>
+	<div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">身份证号</div>
+		<div class="am-list-control">
+			<input name="idcard" id="idcard" type="text" placeholder="请输入身份证号" value="">
+		</div>
+	</div>
+	<div class="am-list-footer">注意：请认真填写，如遇问题请联系人工客服处理。</div>
+</div>
+
+<div style="margin:5px 20px;">
+	<a href="javascript:dosubmit();" type="button" class="am-button" role="button">确定</a>
+</div>
+</form>
+
+<script>
+function dosubmit()
+{
+    var true_name = $("#true_name").val();
+	var idcard = $("#idcard").val();
+	
+	if(true_name == '')
+	{
+		layer.open({
+			content: '姓名不能为空'
+			,skin: 'msg'
+			,time: 2 //2秒后自动关闭
+		});
+        return false;
+	}
+    if(idcard=='')
+	{
+		layer.open({
+			content: '身份证号不能为空'
+			,skin: 'msg'
+			,time: 2 //2秒后自动关闭
+		});
+        return false;
+	}
+
+    $("#myform").submit();
+}
+</script>
+<?php } ?>
+
+</body></html>

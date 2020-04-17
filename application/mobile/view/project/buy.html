@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>立即认领</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">立即认领</span></div>
+</div>
+</div>
+
+<div class="am-list">
+    <div class="am-list-body ">
+        <a class="am-list-item" href="{:url('project/detail')}?id=<?php echo $post['id']; ?>">
+            <?php if ($post['litpic']) { ?><div class="am-list-thumb"><img src="<?php echo $post['litpic']; ?>" alt="" style="width:24px;height:24px;"></div><?php } ?>
+            <div class="am-list-content"><?php echo $post['title']; ?></div>
+        </a>
+    </div>
+</div>
+<form class="ajax_post_submit" id="myform" method="post" action="{:url('project/buy')}" role="form">{:token()}
+<input id="id" name="id" type="text" value="{$id}" style="display:none;" />
+<div class="am-list" style="padding-top:0;">
+    <div class="am-list-item">
+        <div class="am-list-content">委托饲养期限</div>
+        <div class="am-list-extra"><?php echo $post['term']; ?>天</div>
+    </div>
+    <div class="am-list-item">
+        <div class="am-list-content">委托牧场</div>
+        <div class="am-list-extra"><?php echo $post['project_farm']['name']; ?></div>
+    </div>
+    <div class="am-list-item">
+        <div class="am-list-content">牛只单价</div>
+        <div class="am-list-extra"><small>￥</small><?php echo intval($post['min_buy_money']); ?></div>
+    </div>
+    <div class="am-list-item">
+        <div class="am-list-content">总额</div>
+        <div class="am-list-extra"><small>￥</small><span id="total" style="color:red;"><?php if ($post['is_repeat'] == 1) { echo intval($post['min_buy_money']); } else { echo '0'; } ?></span></div>
+    </div>
+</div>
+<style>
+::-webkit-input-placeholder{ /* WebKit browsers */ color:#ccc;font-size:14px;}
+::-moz-placeholder{ /* Mozilla Firefox 19+ */ color:#ccc;font-size:14px;}
+:-ms-input-placeholder{ /* Internet Explorer 10+ */ color:#ccc;font-size:14px;}
+</style>
+<div class="am-edit-inpage">
+    <div class="am-edit-title" style="font-size:18px;">认领份数</div>
+    <div class="am-edit-input am-input-autoclear" style="border-bottom:1px solid #eee;">
+        <span class="am-edit-input-yuan"></span>
+        <input <?php if ($post['is_repeat'] == 1) { echo 'readonly="readonly"'; } ?> id="money" name="money" class="am-edit-value" type="number" value="<?php if ($post['is_repeat'] == 1) { echo '1'; } ?>" autofocus="autofocus" oninput="value=value.replace(/[^\d]/g,'')" onclick="window.event.stopPropagation();" placeholder="" style="font-size:28px;">
+        <div class="am-edit-clear"><i class="am-icon-clear am-icon clear-tiny" style="visibility: hidden;"></i></div>
+    </div>
+    <div class="am-edit-tips am-input-autoclear" style="display:block;">
+        <div>当前余额：<small>￥</small><?php echo $login_info['money']; ?> <a href="{:url('user_recharge/add')}" style="font-size:14px;color:#00cc9f;float:right;">去充值</a></div><!-- 该产品买入后<span style="color:#f24724;">不可撤销</span>，到期前<span style="color:#f24724;">不可取出</span>。 -->
+    </div>
+</div>
+
+<div class="am-list am-list-form" style="padding-bottom:0;">
+<div class="am-list-body">
+    <div class="am-list-item am-input-autoclear">
+        <div class="am-list-label"><font color="red">*</font>支付密码</div>
+        <div class="am-list-control">
+            <input id="pay_password" name="pay_password" type="password" placeholder="默认是登录密码" value="">
+        </div>
+        <?php if (!$login_info['pay_password']) { ?>
+        <div class="am-list-button">
+            <button type="button" onclick="javascript:location.href='{:url('user/user_pay_password_update')}'">去设置</button>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+</div>
+
+<div class="am-list">
+    <div class="am-checkbox agreement">
+        <input id="agreement" type="checkbox" checked="checked">
+        <span class="icon-check" aria-hidden="true"></span>
+        <label for="agreement">
+            我已认真阅读并同意<a href="{:url('page/detail')}?id=tuoyangfuwuxieyi">《认购及托养服务协议》</a>
+        </label>
+    </div>
+</div>
+
+<div style="padding:10px 15px 15px 15px;"><a href="javascript:dosubmit();" class="am-button" role="button" style="background-color:#00cc9f;">提交</a></div>
+</form>
+
+<script>
+// 监听输入金额
+$(function(){
+    $('#money').bind('input propertychange', function() {
+        var money = $(this).val();
+		$("#total").html(money * <?php echo $post['min_buy_money']; ?>);
+        console.log('money', money);
+    });
+});
+
+function is_can_submit()
+{
+    if (!document.getElementById("agreement").checked) {
+        return '请阅读并同意协议';
+    }
+    
+    var pay_password = $("#pay_password").val();
+	var money = $("#money").val();
+    
+    if (money == '') {
+        return '请输入认领份数';
+    }
+    
+    if (money > 0) {
+        
+    } else {
+        return '认领份数格式不正确';
+    }
+    
+    var reg = /^[0-9]+$/;
+    if (!reg.test(money)) {
+        return '认领份数只能是整数';
+    }
+    
+    if (money * <?php echo $post['min_buy_money']; ?> > <?php echo $login_info['money']; ?>) {
+        return '账户余额不足';
+    }
+    
+    if (pay_password == '') {
+        return '请输入支付密码';
+    }
+    
+    return true;
+}
+
+function dosubmit()
+{
+    var submit_prompt = is_can_submit();
+    if (submit_prompt !== true) {
+        //提示
+        layer.open({
+            content: submit_prompt
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+    
+    //询问框
+    layer.open({
+        content: '确定要提交吗？'
+        ,btn: ['确定', '取消']
+        ,yes: function(index){
+            $("#myform").submit();
+            layer.close(index);
+        }
+    });
+}
+</script>
+</body></html>

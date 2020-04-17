@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>领养详情</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">领养详情</span></div>
+</div>
+</div>
+
+<div class="am-list am-list-detailed" style="padding-bottom:0;">
+    <div class="am-list-item am-list-item-bordered">
+      <div class="am-list-detailed-label">名称</div>
+      <div class="am-list-detailed-content"><?php echo $post['title']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">认领金额</div>
+      <div class="am-list-detailed-content">￥<?php echo $post['money']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">领养状态</div>
+      <div class="am-list-detailed-content"><?php echo $post['status_text']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">还款方式</div>
+      <div class="am-list-detailed-content"><?php echo $post['dividend_mode_text']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">认领期限</div>
+      <div class="am-list-detailed-content"><?php echo $post['term']; ?>天</div>
+    </div>
+    <div class="am-list-item am-list-item-bordered">
+      <div class="am-list-detailed-label">认领时间</div>
+      <div class="am-list-detailed-content"><?php echo date('Y-m-d H:i:s', $post['add_time']); ?></div>
+    </div>
+    <a class="am-list-item am-list-item-bordered" href="{:url('user_project_income/index')}?user_project_id=<?php echo $post['id']; ?>">
+      <div class="am-list-detailed-label">认领收益</div>
+      <div class="am-list-detailed-content" style="color:#108ee9;">查看收益</div>
+      <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+    </a>
+    <a class="am-list-item" href="{:url('agreement')}?id=<?php echo $post['id']; ?>">
+      <div class="am-list-detailed-label">认领合同</div>
+      <div class="am-list-detailed-content" style="color:#108ee9;">电子合同</div>
+      <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+    </a>
+    <?php if (false) { ?><div class="am-list-footer">如有疑问请联系客服</div><?php } ?>
+</div>
+
+<?php if (!empty($user_project_income_list)) { ?>
+<style>
+.record_outer{background:#fff;margin-top:10px;margin-bottom:10px;font-size:14px;}
+.record_outer table{width:100%;border-collapse:collapse;}
+.record_outer table td,.record_outer table th{border: 1px solid #ebebeb;padding:6px 6px;text-align:center;}
+</style>
+<div class="record_outer">
+<table>
+	<tr>
+		<th colspan="3">认领收益支付明细</th>
+	</tr>
+	<tr>
+		<th>应支付收益时间</th>
+		<th>金额(元)</th>
+		<th>状态</th>
+	</tr>
+	<?php foreach ($user_project_income_list as $k=>$v) { ?>
+	<tr>
+		<td><?php echo date('Y-m-d H:i', $v['add_time']); ?></td>
+		<td><?php echo $v['money']; ?></td>
+		<td style="<?php if ($v['status'] == 1) { echo 'color:#04ba06;'; } elseif ($v['status'] == 0) { echo 'color:red;'; } ?>"><?php echo $v['status_text']; ?></td>
+	</tr>
+	<?php } ?>
+</table>
+</div>
+<?php } ?>
+{include file="common/footer"/}
+</body></html>

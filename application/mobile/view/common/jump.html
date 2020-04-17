@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>跳转提示</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox"><div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">跳转提示</span></div>
+</div></div>
+
+<div class="am-message result" style="margin-bottom:0;">
+    <i class="am-icon result <?php if ($code == 1) { /* 成功 */ echo 'success'; } else { echo 'error'; } ?>"></i>
+    <div class="am-message-main"><?php echo(strip_tags($msg)); ?></div>
+    <div class="am-message-sub">等待时间：<b id="wait"><?php echo($wait); ?></b>s</div>
+</div>
+
+<div class="am-button-wrap" style="padding:15px 20px;">
+    <a class="am-button blue" href="<?php echo $url; ?>" id="href">返回</a>
+</div>
+
+<script type="text/javascript">
+(function(){
+    var wait = document.getElementById('wait'), href = document.getElementById('href').href;
+    var interval = setInterval(function(){
+        var time = --wait.innerHTML;
+        if(time <= 0) {
+            location.href = href;
+            clearInterval(interval);
+        };
+    }, 1000);
+})();
+</script>
+</body></html>

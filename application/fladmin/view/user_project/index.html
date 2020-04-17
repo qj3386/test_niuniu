@@ -1,0 +1,39 @@
+{extend name="public/base" /}
+{block name="title"}在投项目{/block}
+
+{block name="content"}
+<h3 class="sub-header">在投项目 <small class="badge"><?php echo $list->total(); ?> 条</small></h3>
+
+<form name="listarc"><div class="table-responsive"><table class="table table-striped table-hover">
+<thead><tr class="info">
+<th>ID</th>
+<th>项目名称</th>
+<th>投资人</th>
+<th>投资金额</th>
+<th>返款方式</th>
+<th>期限</th>
+<th>投资状态</th>
+<th>投资起止时间</th>
+<th>操作</th>
+</tr></thead>
+<tbody>
+<?php if ($list) { foreach ($list as $row) { ?><tr>
+<td><?php echo $row['id']; ?></td>
+<td><a href="{:url('index')}?project_id=<?php echo $row['project_id']; ?>"><?php echo $row['title']; ?></a></td>
+<td><a href="{:url('index')}?user_id=<?php echo $row['user_id']; ?>"><?php echo mobile_number_encrypt($row['user']['mobile']); ?> <?php echo $row['user']['true_name']; ?></a></td>
+<td><font color="red"><?php echo $row['money']; ?></font></td>
+<td><a href="{:url('index')}?dividend_mode=<?php echo $row['dividend_mode']; ?>"><?php echo $row['dividend_mode_text']; ?></a></td>
+<td><?php echo $row['term']; ?></td>
+<td><a href="{:url('index')}?status=<?php echo $row['status']; ?>"><?php echo $row['status_text']; ?></a></td>
+<td><?php echo date('Y-m-d H:i', $row['add_time']); ?> 至 <?php echo date('Y-m-d H:i', ($row['add_time'] + $row['term'] * 3600 * 24)); ?></td>
+<td><a onclick="delconfirm('<?php echo url('user_project/del').'?id='.$row['id']; ?>')" href="javascript:;">删除</a></td>
+</tr><?php }} ?>
+</tbody></table></div><!-- 表格结束 --></form><!-- 表单结束 -->
+
+<form id="searcharc" class="navbar-form" action="{:url('index')}" method="get">
+<div class="form-group"><input type="text" name="keyword" id="keyword" class="form-control required" placeholder="搜索关键词..."></div>
+<button type="submit" class="btn btn-info" value="Submit">搜索一下</button></form>
+
+<div class="backpages">{$page}</div>
+
+{/block}

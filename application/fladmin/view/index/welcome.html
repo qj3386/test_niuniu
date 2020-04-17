@@ -1,0 +1,12 @@
+{extend name="public/base" /}
+{block name="title"}首页{/block}
+
+{block name="content"}
+<h2 class="sub-header"><?php echo sysconfig('CMS_WEBNAME'); ?></h2>
+<p>· 欢迎使用<?php echo sysconfig('CMS_WEBNAME'); ?>，简单易用靠谱。<br>
+· 采用PHP+Mysql架构，符合网站SEO优化理念、功能全面、安全稳定。</p>
+<h3>网站基本信息</h3>
+域名/IP：<?php echo $_SERVER["SERVER_NAME"]; ?> | <?php echo $_SERVER["REMOTE_ADDR"]; ?><br><br>
+&copy; <?php echo sysconfig('CMS_WEBNAME'); ?> 版权所有<br><br>
+
+{/block}

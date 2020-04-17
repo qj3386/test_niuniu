@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>充值</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">充值</span></div>
+    <div class="ds-in-bl nav_menu"><a href="<?php echo url('index'); ?>">充值记录</a></div>
+</div>
+</div>
+
+<form class="ajax_post_submit" id="myform" method="post" action="{:url('user_recharge/add')}" role="form">{:token()}
+<div class="am-edit-inpage">
+    <div class="am-edit-title" style="font-size:18px;">充值金额</div>
+    <div class="am-edit-input am-input-autoclear" style="border-bottom:1px solid #eee;">
+        <span class="am-edit-input-yuan">¥</span>
+        <input id="money" name="money" class="am-edit-value" type="number" value="" autofocus="autofocus" oninput="value=value.replace(/[^\d]/g,'')" onclick="window.event.stopPropagation();">
+        <div class="am-edit-clear"><i class="am-icon-clear am-icon clear-tiny" style="visibility: hidden;"></i></div>
+    </div>
+    <div class="am-edit-tips am-input-autoclear">
+	可用余额：￥<span style="color:#f24724;"><?php echo floatval($login_info['money']); ?></span>元
+    </div>
+</div>
+
+<div class="am-list am-list-form">
+    <div class="am-list-item am-input-autoclear">
+		<div class="am-list-label">充值方式</div>
+		<div class="am-list-extra">
+			<select name="pay_type" id="pay_type">
+				<?php $is_pay_type = 0; if(strpos(sysconfig('CMS_RECHARGE_METHOD'), 'weixin') !== false) { $is_pay_type = 1; ?><option value="1">微信</option><?php } ?>
+				<?php if(strpos(sysconfig('CMS_RECHARGE_METHOD'), 'zhifubao') !== false) { $is_pay_type = 1; ?><option value="2">支付宝</option><?php } ?>
+				<?php if(strpos(sysconfig('CMS_RECHARGE_METHOD'), 'bank') !== false) { $is_pay_type = 1; ?><option value="3">银行入款</option><?php } ?>
+			</select>
+		</div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</div>
+</div>
+
+<div style="padding:5px 20px 15px 20px;"><a href="javascript:dosubmit();" class="am-button" role="button">立即充值</a></div>
+</form>
+
+<script>
+// 监听输入金额
+$(function(){
+    $('#money').bind('input propertychange', function() {
+        var money = $(this).val();
+        console.log('money', money);
+    });
+});
+
+function dosubmit()
+{
+	var money = $("#money").val();
+	var pay_type = $("#pay_type").val();
+
+    if (money == '') {
+		layer.open({
+            content: '请输入充值金额'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+
+	if (money < 10) {
+		layer.open({
+            content: '充值金额不能小于10元'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+	}
+
+	if (money > 10000000) {
+		layer.open({
+            content: '充值金额不合理'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+	}
+
+	var url = '{:url('user_recharge/add')}';
+	$.post(url, {money:money,pay_type:pay_type}, function(res)
+	{
+		//提示
+		layer.open({
+			content: res.msg
+			,skin: 'msg'
+			,time: 2 //2秒后自动关闭
+		});
+
+		if (res.code == 0) {
+            setTimeout(function () {
+				if (res.url) {
+					location.href = res.url;
+				} else {
+					location.reload();
+				}
+			}, 1000);
+		} else {
+            
+		}
+	},'json');
+}
+</script>
+</body></html>

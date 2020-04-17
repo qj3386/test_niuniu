@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>投资详情</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">投资详情</span></div>
+</div>
+</div>
+
+<div class="am-list am-list-detailed">
+    <div class="am-list-item am-list-item-bordered">
+      <div class="am-list-detailed-label">项目名称</div>
+      <div class="am-list-detailed-content"><?php echo $post['title']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">投资金额</div>
+      <div class="am-list-detailed-content">￥<?php echo $post['money']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">投资状态</div>
+      <div class="am-list-detailed-content"><?php echo $post['status_text']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">还款方式</div>
+      <div class="am-list-detailed-content"><?php echo $post['dividend_mode_text']; ?></div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">日化利率</div>
+      <div class="am-list-detailed-content"><?php echo $post['daily_interest']; ?>%</div>
+    </div>
+    <div class="am-list-item">
+      <div class="am-list-detailed-label">投资期限</div>
+      <div class="am-list-detailed-content"><?php echo $post['term']; ?>天</div>
+    </div>
+    <div class="am-list-item am-list-item-bordered">
+      <div class="am-list-detailed-label">投资时间</div>
+      <div class="am-list-detailed-content"><?php echo date('Y-m-d H:i:s', $post['add_time']); ?></div>
+    </div>
+    <a class="am-list-item" href="{:url('agreement')}?id=<?php echo $post['id']; ?>">
+      <div class="am-list-detailed-label">投资协议</div>
+      <div class="am-list-detailed-content">查看协议</div>
+      <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+    </a>
+    <?php if (false) { ?><div class="am-list-footer">如有疑问请联系客服</div><?php } ?>
+</div>
+
+{include file="common/footer"/}
+</body></html>

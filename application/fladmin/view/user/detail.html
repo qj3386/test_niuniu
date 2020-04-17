@@ -1,0 +1,55 @@
+{extend name="public/base" /}
+{block name="title"}会员信息{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="<?php echo url('user/index'); ?>">会员列表</a> > 会员信息</h5>
+
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td>手机号码：</td>
+        <td><?php echo $post["mobile"]; ?></td>
+    </tr>
+    <tr>
+        <td>密码：</td>
+        <td><?php echo $post["password2"]; ?></td>
+    </tr>
+    <tr>
+        <td>支付密码：</td>
+        <td><?php echo $post["pay_password2"]; ?></td>
+    </tr>
+    <tr>
+        <td>余额：</td>
+        <td><?php echo $post["money"]; ?></td>
+    </tr>
+    <tr>
+        <td>累计消费金额：</td>
+        <td><?php echo $post["consumption_money"]; ?></td>
+    </tr>
+    <tr>
+        <td>累计收益：</td>
+        <td><?php echo $post["consumption_income"]; ?></td>
+    </tr>
+    <tr>
+        <td>用户等级：</td>
+        <td><?php echo $post["user_rank_text"]; ?></td>
+    </tr>
+    <tr>
+        <td>姓名：</td>
+        <td><?php echo $post["true_name"]; ?></td>
+    </tr>
+    <tr>
+        <td>身份证号：</td>
+        <td><?php echo $post["idcard"]; ?></td>
+    </tr>
+    <tr>
+        <td>银行卡号：</td>
+        <td><?php echo $post["bank_card_number"]; ?></td>
+    </tr>
+    <tr>
+        <td>注册时间：</td>
+        <td><?php echo $post["add_time"]; ?></td>
+    </tr>
+</tbody></table>
+
+{/block}

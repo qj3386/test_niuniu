@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>支付宝转账充值</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="{:url('user/index')}"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">支付宝转账充值</span></div>
+</div>
+</div>
+
+<div style="color:#666;text-align:center;font-size:20px;padding-top:15px;padding-bottom:5px;">支付宝转账 {$money} 元</div>
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+
+<div class="am-list am-list-form" style="padding-bottom:0;">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">账号名称：</div>
+    <div class="am-list-control">
+      <input id="account_name" type="text" value="<?php echo sysconfig('CMS_PAY_ALI_TRANSFER_NAME'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_account_name" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">收款账号：</div>
+    <div class="am-list-control">
+      <input id="account" type="text" value="<?php echo sysconfig('CMS_PAY_ALI_TRANSFER_ACCOUNT'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_account" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var account_name = $("#account_name").val();
+var account = $("#account").val();
+//账号
+var clipboard_account_name = new Clipboard('.cp_account_name', {
+	text: function() {
+		return account_name;
+	}
+});
+clipboard_account_name.on('success', function(e) {
+	layer.open({
+		content: '账号名称复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_account_name.on('error', function(e) {
+	console.log(e);
+});
+//收款账号
+var clipboard_account = new Clipboard('.cp_account', {
+	text: function() {
+		return account;
+	}
+});
+clipboard_account.on('success', function(e) {
+	layer.open({
+		content: '收款账号复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_account.on('error', function(e) {
+	console.log(e);
+});
+</script>
+</body></html>

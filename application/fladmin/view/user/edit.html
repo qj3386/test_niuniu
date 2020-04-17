@@ -1,0 +1,123 @@
+{extend name="public/base" /}
+{block name="title"}会员信息修改{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="<?php echo url('user/index'); ?>">会员列表</a> > 会员信息修改</h5>
+
+<form id="addarc" method="post" action="" role="form" enctype="multipart/form-data" class="table-responsive">
+<input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>">
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td align="right">ID：</td>
+        <td><?php echo $post["id"]; ?></td>
+    </tr>
+    <tr>
+        <td align="right">推荐人：</td>
+        <td><?php if (isset($post['parent_user']['mobile'])) { echo '<a href="' . url('user/index') . '?parent_id=' . $post['parent_id'] . '">' . $post['parent_user']['mobile'] . ' '. $post['parent_user']['true_name'] . '</a> '; } ?><input placeholder="默认为0" name="parent_id" type="text" id="parent_id" value="<?php echo $post["parent_id"]; ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">手机号：</td>
+        <td><?php echo $post["mobile"]; ?> <a href="https://www.baidu.com/s?wd=<?php echo $post["mobile"]; ?>" target="_blank">查看手机号归属地</a></td>
+    </tr>
+    <tr>
+        <td align="right">密码：</td>
+        <td><?php echo $post["password2"]; ?></td>
+    </tr>
+    <tr>
+        <td align="right">支付密码：</td>
+        <td><?php echo $post["pay_password2"]; ?></td>
+    </tr>
+    <tr>
+        <td align="right">姓名：</td>
+        <td><input name="true_name" type="text" id="true_name" value="<?php echo $post["true_name"]; ?>" style="width:30%"></td>
+    </tr>
+    <tr>
+        <td align="right">身份证号：</td>
+        <td><input name="idcard" type="text" id="idcard" value="<?php echo $post["idcard"]; ?>" style="width:30%"> <a href="https://qq.ip138.com/idsearch/index.asp?userid=<?php echo $post["idcard"]; ?>&action=idcard" target="_blank">查看身份证归属地</a></td>
+    </tr>
+    <tr>
+        <td align="right">银行名称：</td>
+        <td><input name="bank_name" type="text" id="bank_name" value="<?php echo $post["bank_name"]; ?>" style="width:30%"></td>
+    </tr>
+    <tr>
+        <td align="right">支行名称：</td>
+        <td><input name="bank_branch_name" type="text" id="bank_branch_name" value="<?php echo $post["bank_branch_name"]; ?>" style="width:30%"></td>
+    </tr>
+    <tr>
+        <td align="right">卡号：</td>
+        <td><input name="bank_card_number" type="text" id="bank_card_number" value="<?php echo $post["bank_card_number"]; ?>" style="width:30%"></td>
+    </tr>
+    <tr>
+        <td align="right">余额：</td>
+        <td><?php echo $post["money"]; ?></td>
+    </tr>
+    <tr>
+        <td align="right">昵称：</td>
+        <td><input name="nickname" type="text" id="nickname" value="<?php echo $post["nickname"]; ?>" style="width:30%"></td>
+    </tr>
+    <tr>
+        <td align="right">状态：</td>
+        <td>
+		<select name="status" id="status">
+            <option<?php if($post["status"]==0){ echo ' selected'; } ?> value="0">正常</option>
+            <option<?php if($post["status"]==1){ echo ' selected'; } ?> value="1">待审</option>
+            <option<?php if($post["status"]==2){ echo ' selected'; } ?> value="2">锁定</option>
+		</select>
+		</td>
+    </tr>
+    <tr>
+        <td align="right">会员等级：</td>
+        <td><?php echo $post["user_rank_text"]; ?></td>
+    </tr>
+    <tr>
+        <td align="right">注册时间：</td>
+        <td><?php echo date('Y-m-d H:i:s', $post["add_time"]); ?></td>
+    </tr>
+    <tr>
+        <td align="right">登录IP：</td>
+        <td><?php echo date('Y-m-d H:i:s', $post["login_time"]); ?> <?php echo $post["login_ip"]; ?> <?php echo $post["user_agent"]; ?> <a href="https://www.baidu.com/s?wd=<?php echo $post["login_ip"]; ?>" target="_blank">查看IP归属地</a></td>
+    </tr>
+    <tr>
+        <td align="right">性别：</td>
+        <td>
+		<select name="sex" id="sex">
+            <option<?php if($post["sex"]==0){ echo ' selected'; } ?> value="0">未知</option>
+            <option<?php if($post["sex"]==1){ echo ' selected'; } ?> value="1">男</option>
+            <option<?php if($post["sex"]==2){ echo ' selected'; } ?> value="2">女</option>
+		</select>
+		</td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">保存(Submit)</button>&nbsp;&nbsp;<button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+        }
+    });
+
+    //重置
+    $('#addarc input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+
+    $("#addarc").submit(function(){
+        $(".required").trigger('blur');
+        var numError = $('#addarc .onError').length;
+        
+        if(numError){return false;}
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,214 @@
+{extend name="public/base" /}
+{block name="title"}其它设置{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="{:url('index')}">系统配置参数</a> > 其它设置</h5>
+
+<form id="addarc" method="post" action="{:url('other')}" role="form" enctype="multipart/form-data" class="table-responsive">
+<table class="table table-striped table-bordered">
+<tbody>
+<!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.min.js"></script>
+    <tr>
+        <td align="right" style="vertical-align:middle;">微信收款二维码：</td>
+        <td style="vertical-align:middle;"><button type="button" onclick="uploadWechatpayImg();">选择图片</button> <input name="CMS_PAY_WECHAT_IMAGE" type="text" id="pay_wechat_image" value="{:sysconfig('CMS_PAY_WECHAT_IMAGE')}" style="width:40%"> <a href="{:sysconfig('CMS_PAY_WECHAT_IMAGE')}" target="_blank"><img style="margin-left:20px;" src="{:sysconfig('CMS_PAY_WECHAT_IMAGE')}" width="120" height="80" id="wechatpay_picview"></a></td>
+    </tr>
+<script>
+var _editor_cover;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor_cover = UE.getEditor('wechatpay_img');
+    _editor_cover.ready(function () {
+        //设置编辑器不可用
+        _editor_cover.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor_cover.hide();
+        //侦听图片上传
+        _editor_cover.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#pay_wechat_image').val(arg[0].src);
+            //图片预览
+            $('#wechatpay_picview').attr("src",arg[0].src).css("display","inline-block");
+        })
+    });
+});
+//弹出图片上传的对话框
+function uploadWechatpayImg()
+{
+    var myWechatpayImg = _editor_cover.getDialog("insertimage");
+	myWechatpayImg.render();
+    myWechatpayImg.open();
+}
+</script>
+<script type="text/plain" id="wechatpay_img"></script>
+    <tr>
+        <td align="right" style="vertical-align:middle;">支付宝收款二维码：</td>
+        <td style="vertical-align:middle;"><button type="button" onclick="uploadAlipayImg();">选择图片</button> <input name="CMS_PAY_ALI_IMAGE" type="text" id="pay_ali_image" value="{:sysconfig('CMS_PAY_ALI_IMAGE')}" style="width:40%"> <a href="{:sysconfig('CMS_PAY_ALI_IMAGE')}" target="_blank"><img style="margin-left:20px;" src="{:sysconfig('CMS_PAY_ALI_IMAGE')}" width="120" height="80" id="alipay_picview"></a></td>
+    </tr>
+<script type="text/javascript">
+var _editor;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor = UE.getEditor('alipay_img');
+    _editor.ready(function () {
+        //设置编辑器不可用
+        _editor.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor.hide();
+        //侦听图片上传
+        _editor.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#pay_ali_image').val(arg[0].src);
+            //图片预览
+            $('#alipay_picview').attr("src",arg[0].src).css("display","inline-block");
+        })
+    });
+});
+//弹出图片上传的对话框
+function uploadAlipayImg()
+{
+    var myAlipayImg = _editor.getDialog("insertimage");
+	myAlipayImg.render();
+    myAlipayImg.open();
+}
+</script>
+<script type="text/plain" id="alipay_img"></script>
+    <tr>
+        <td align="right" style="vertical-align:middle;">首页弹窗图片(长宽比3:2)：</td>
+        <td style="vertical-align:middle;"><button type="button" onclick="uploadHomeactivityImg();">选择图片</button> <input name="CMS_HOME_ACTIVITY_IMAGE" type="text" id="homeactivity_image" value="{:sysconfig('CMS_HOME_ACTIVITY_IMAGE')}" style="width:40%"> <a href="{:sysconfig('CMS_HOME_ACTIVITY_IMAGE')}" target="_blank"><img style="margin-left:20px;" src="{:sysconfig('CMS_HOME_ACTIVITY_IMAGE')}" width="120" height="80" id="homeactivity_picview"></a></td>
+    </tr>
+<script>
+var _editor_homeactivity;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor_homeactivity = UE.getEditor('homeactivity_img');
+    _editor_homeactivity.ready(function () {
+        //设置编辑器不可用
+        _editor_homeactivity.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor_homeactivity.hide();
+        //侦听图片上传
+        _editor_homeactivity.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#homeactivity_image').val(arg[0].src);
+            //图片预览
+            $('#homeactivity_picview').attr("src",arg[0].src).css("display","inline-block");
+        })
+    });
+});
+//弹出图片上传的对话框
+function uploadHomeactivityImg()
+{
+    var myHomeactivityImg = _editor_homeactivity.getDialog("insertimage");
+	myHomeactivityImg.render();
+    myHomeactivityImg.open();
+}
+</script>
+<script type="text/plain" id="homeactivity_img"></script>
+    <tr>
+        <td align="right">是否开启首页弹窗：</td>
+        <td>
+			<input type="radio" value="1" name="CMS_HOME_ACTIVITY_STATUS" <?php if (sysconfig('CMS_HOME_ACTIVITY_STATUS') == 1) { echo 'checked'; } ?> />&nbsp;开启&nbsp;&nbsp;
+			<input type="radio" value="0" name="CMS_HOME_ACTIVITY_STATUS" <?php if (sysconfig('CMS_HOME_ACTIVITY_STATUS') == 0) { echo 'checked'; } ?> />&nbsp;关闭
+		</td>
+    </tr>
+    <tr>
+        <td align="right">首页弹窗跳转链接：</td>
+        <td><input name="CMS_HOME_ACTIVITY_URL" type="text" value="<?php echo sysconfig('CMS_HOME_ACTIVITY_URL'); ?>" style="width:60%;"> javascript:;表示不跳转</td>
+    </tr>
+    <tr>
+        <td align="right">网站名称：</td>
+        <td><input name="CMS_WEBNAME" type="text" value="<?php echo sysconfig('CMS_WEBNAME'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">APP下载地址：</td>
+        <td><input name="CMS_APP_DOWNLOAD_URL" type="text" value="<?php echo sysconfig('CMS_APP_DOWNLOAD_URL'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">网站公告：</td>
+        <td><textarea name="CMS_STATION_NOTICE" rows="5" style="width:80%;height:70px;vertical-align:middle;"><?php echo sysconfig('CMS_STATION_NOTICE'); ?></textarea></td>
+    </tr>
+    <tr>
+        <td align="right">统计代码：</td>
+        <td><textarea name="CMS_SITE_ANALYTICS" rows="5" style="width:80%;height:70px;vertical-align:middle;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></textarea></td>
+    </tr>
+    <tr>
+        <td align="right">在线聊天客服链接：</td>
+        <td><input name="CMS_ONLINE_SERVICE_URL" type="text" value="<?php echo sysconfig('CMS_ONLINE_SERVICE_URL'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">客服电话：</td>
+        <td><input name="CMS_CONSUMER_HOTLINE" type="text" value="<?php echo sysconfig('CMS_CONSUMER_HOTLINE'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">担保机构：</td>
+        <td><input name="CMS_GUARANTEE_AGENCY" type="text" value="<?php echo sysconfig('CMS_GUARANTEE_AGENCY'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">阿里云市场APPCODE：</td>
+        <td><input name="CMS_ALIYUN_MARKET_APPCODE" type="text" value="<?php echo sysconfig('CMS_ALIYUN_MARKET_APPCODE'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">网建SMS短信通：</td>
+        <td><input name="CMS_SMS_WEBCHINESE" type="text" value="<?php echo sysconfig('CMS_SMS_WEBCHINESE'); ?>" style="width:60%;"> 格式：账号,key</td>
+    </tr>
+    <tr>
+        <td align="right">短信注册验证开关：</td>
+        <td>
+			<input type="radio" value="1" name="CMS_IS_SMS_REGISTRATION_VERIFICATION" <?php if (sysconfig('CMS_IS_SMS_REGISTRATION_VERIFICATION') == 1) { echo 'checked'; } ?> />&nbsp;开启&nbsp;&nbsp;
+			<input type="radio" value="0" name="CMS_IS_SMS_REGISTRATION_VERIFICATION" <?php if (sysconfig('CMS_IS_SMS_REGISTRATION_VERIFICATION') == 0) { echo 'checked'; } ?> />&nbsp;关闭
+		</td>
+    </tr>
+    <tr>
+        <td align="right">实名认证开关：</td>
+        <td>
+			<input type="radio" value="1" name="CMS_IS_TRUE_NAME_VERIFICATION" <?php if (sysconfig('CMS_IS_TRUE_NAME_VERIFICATION') == 1) { echo 'checked'; } ?> />&nbsp;开启&nbsp;&nbsp;
+			<input type="radio" value="0" name="CMS_IS_TRUE_NAME_VERIFICATION" <?php if (sysconfig('CMS_IS_TRUE_NAME_VERIFICATION') == 0) { echo 'checked'; } ?> />&nbsp;关闭
+		</td>
+    </tr>
+    <tr>
+        <td align="right">新用户注册奖励(元)：</td>
+        <td><input name="CMS_USER_REGISTRATION_REWARD" type="text" value="<?php echo sysconfig('CMS_USER_REGISTRATION_REWARD'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">签到奖励(元)：</td>
+        <td><input name="CMS_SIGN_POINT" type="text" value="<?php echo sysconfig('CMS_SIGN_POINT'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">最低提现金额(元)：</td>
+        <td><input name="CMS_MIN_WITHDRAWAL_MONEY" type="text" value="<?php echo sysconfig('CMS_MIN_WITHDRAWAL_MONEY'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">公司名称：</td>
+        <td><input name="CMS_COMPANY_NAME" type="text" value="<?php echo sysconfig('CMS_COMPANY_NAME'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">公司地址：</td>
+        <td><input name="CMS_COMPANY_ADDRESS" type="text" value="<?php echo sysconfig('CMS_COMPANY_ADDRESS'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">公司联系方式：</td>
+        <td><input name="CMS_COMPANY_CONTACT" type="text" value="<?php echo sysconfig('CMS_COMPANY_CONTACT'); ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">银行入款-收款银行：</td>
+        <td><input name="CMS_PAY_BANK_NAME" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_NAME'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">银行入款-收款人：</td>
+        <td><input name="CMS_PAY_BANK_PAYEE" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_PAYEE'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">银行入款-收款账号：</td>
+        <td><input name="CMS_PAY_BANK_ACCOUNT" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_ACCOUNT'); ?>" style="width:60%;"></td>
+    </tr>
+    <tr>
+        <td align="right">银行入款-开户支行：</td>
+        <td><input name="CMS_PAY_BANK_BRANCH" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_BRANCH'); ?>" style="width:60%;"> 可以为空</td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">保存(Submit)</button>&nbsp;&nbsp;<button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button><input type="hidden"></input></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+
+{/block}

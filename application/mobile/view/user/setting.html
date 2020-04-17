@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>编辑资料</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<link href="<?php echo http_host(); ?>/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo http_host(); ?>/js/layer/mobile/layer.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">编辑资料</span></div>
+</div>
+</div>
+
+<div class="am-list">
+	<a href="javascript:;" class="am-list-item">
+		<div class="am-list-content">手机号</div>
+		<div class="am-list-extra"><?php echo substr_replace($login_info['mobile'],'****',3,4); ?></div>
+	</a>
+	<a href="javascript:update_avator();" class="am-list-item" style="min-height:72px;">
+		<div class="am-list-thumb">
+			<form id="head_img" action="<?php echo get_api_url_address() . '/image/image_upload'; ?>" method="post" enctype="multipart/form-data">
+                <img style="width:38px;height:38px;" id="avator" src="<?php if ($login_info['head_img']!='') { echo $login_info['head_img']; } else { echo http_host().'/images/mobile/no_user.jpg'; } ?>">
+                <input id="fileupload" type="file" name="file" style="display:none;">
+            </form>
+		</div>
+		<div class="am-list-content">头像</div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+<script type="text/javascript" src="/js/jquery-form.js"></script>
+<script type="text/javascript">
+function update_avator()
+{
+    $('#fileupload').trigger('click');
+}
+
+$(function(){
+    $("#fileupload").change(function(){
+		$("#head_img").ajaxSubmit({
+			dataType: 'json',
+			success: function(res) {
+				var img = res.data[0].path;
+				if(res.code == 0)
+                {
+					$('#avator').attr('src', img);
+                    
+                    $.post('{:url("user/user_info_update")}', {head_img:img}, function(res2)
+                    {
+                        if(res2.code == 0)
+                        {
+                            //提示
+                            layer.open({
+                                content: '头像修改成功'
+                                ,skin: 'msg'
+                                ,time: 2 //2秒后自动关闭
+                            });
+                        }
+                    },'json');
+
+                    setTimeout(function(){ location.reload(); }, 1000);
+				}
+			},
+			error:function(res){
+				//files.html(res.responseText);
+			}
+		});
+	});
+});
+</script>
+	<a href="javascript:update_username();" class="am-list-item">
+		<div class="am-list-content">用户名</div>
+		<div class="am-list-extra"><?php echo $login_info['user_name']; ?></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+<style>
+.adr_add{margin:0 10px;}
+.adr-form-group input[type=text],.adr-form-group input[type=password]{display:block;width:100%;font-size:16px;padding:12px;color:#777;vertical-align:middle;background-color:#fff;background-image:none;border:1px solid #ddd;border-radius:0;box-sizing:border-box;}
+.bottoma{display:block;font-size:18px;padding:10px;border-radius:2px;}
+</style>
+<script>
+function update_username()
+{
+    //询问框
+    layer.open({
+        title: [
+          '用户名修改',
+          'background-color: #FF4351; color:#fff;'
+        ]
+        ,content: '<div class="adr-form-group"><input type="text" name="user_name" class="" id="user_name" placeholder="请输入用户名"></div>'
+        ,btn: ['确定', '取消']
+        ,yes: function(index){
+            var user_name = $("#user_name").val();
+            
+            if(user_name == '')
+            {
+                layer.open({
+                    content: '用户名不能为空'
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });
+            }
+            else
+            {
+                $.post('{:url("user/user_info_update")}',{user_name:user_name},function(res)
+                {
+                    if(res.code==0)
+                    {
+                        //提示
+                        layer.open({
+                            content: '修改成功'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+
+                        setTimeout(function(){ location.reload(); }, 1000);
+                    }
+                    else
+                    {
+                        layer.open({
+                            content: res.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                    }
+                },'json');
+            }
+            
+            layer.close(index);
+        }
+    });
+}
+</script>
+	<a href="javascript:update_nickname();" class="am-list-item">
+		<div class="am-list-content">昵称</div>
+		<div class="am-list-extra"><?php echo $login_info['nickname']; ?></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+<script>
+function update_nickname()
+{
+    //询问框
+    layer.open({
+        title: [
+          '昵称修改',
+          'background-color: #FF4351; color:#fff;'
+        ]
+        ,content: '<div class="adr-form-group"><input type="text" name="nickname" class="" id="nickname" placeholder="请输入昵称"></div>'
+        ,btn: ['确定', '取消']
+        ,yes: function(index){
+            var nickname = $("#nickname").val();
+            
+            if(nickname == '')
+            {
+                layer.open({
+                    content: '修改失败'
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });
+            }
+            else
+            {
+                $.post('{:url("user/user_info_update")}',{nickname:nickname},function(res)
+                {
+                    if(res.code==0)
+                    {
+                        //提示
+                        layer.open({
+                            content: '修改成功'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                    }
+                    else
+                    {
+                        layer.open({
+                            content: res.msg
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
+                    }
+                },'json');
+
+                setTimeout(function(){ window.location.reload(); }, 1000);
+            }
+            
+            layer.close(index);
+        }
+    });
+}
+</script>
+	<a href="javascript:update_sex_layer();" class="am-list-item">
+		<div class="am-list-content">性别</div>
+		<div class="am-list-extra"><?php if ($login_info['sex'] == 0) { echo '未知'; } elseif ($login_info['sex'] == 1) { echo '男'; } elseif ($login_info['sex'] == 2) { echo '女'; } ?></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+<script>
+function update_sex_layer()
+{
+    //询问框
+    layer.open({
+        title: [
+          '请选择性别',
+          'background-color: #FF4351; color:#fff;'
+        ]
+        ,content: '<div style="padding:15px;"><a style="margin-bottom:10px;background-color:#1aad19;text-align:center;color:white;border:1px solid #179e16;" class="bottoma" onclick="layer.closeAll();" href="javascript:update_sex(1);">男</a><a style="margin-bottom:10px;background-color:#ea5a3d;text-align:center;color:white;border:1px solid #dd2727;" class="bottoma" onclick="layer.closeAll();" href="javascript:update_sex(2);">女</a></div>'
+    });
+}
+
+function update_sex(sex)
+{
+    $.post('{:url("user/user_info_update")}',{sex:sex},function(res)
+    {
+        if(res.code==0)
+        {
+            //提示
+            layer.open({
+                content: '修改成功'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+        }
+        else
+        {
+            layer.open({
+                content: res.msg
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });
+        }
+    },'json');
+
+    setTimeout(function(){ window.location.reload(); }, 1000);
+}
+</script>
+	<a href="javascript:qrcode_layer();" class="am-list-item">
+		<div class="am-list-content">二维码名片</div>
+		<div class="am-list-extra"></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="fa fa-qrcode"></span></div>
+	</a>
+<script>
+function qrcode_layer()
+{
+    //询问框
+    layer.open({
+        content: '<div><div><img style="width:100%;" class="imgzsy" src="<?php echo get_erweima( url('login/register').'?invite_code=' . $login_info['mobile'], 240 ); ?>"></div><p style="color:#999;">轻松扫一扫，赚钱要趁早</p></div>'
+    });
+}
+</script>
+</div>
+
+<div class="am-list" style="padding-top:0;">
+	<a href="{:url('user/user_password_update')}" class="am-list-item">
+		<div class="am-list-content">修改密码</div>
+		<div class="am-list-extra"></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+	<a href="{:url('user/user_pay_password_update')}" class="am-list-item">
+		<div class="am-list-content">支付密码</div>
+		<div class="am-list-extra"></div>
+		<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+	</a>
+</div>
+<div style="padding:5px 20px 15px 20px;">
+<a href="<?php echo url('login/logout'); ?>" class="am-button warn">安全退出</a>
+</div>
+
+</body></html>

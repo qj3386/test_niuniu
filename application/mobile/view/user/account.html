@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>资金管理</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<link rel="stylesheet" href="/css/font-awesome.min.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="background-color:#ffffff;">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">资金管理</span></div>
+    <div class="ds-in-bl nav_menu"><a href="<?php echo url('user_money/index'); ?>">资金明细</a></div>
+</div>
+</div>
+
+<style>
+.account{text-align:center;margin-top:30px;}
+.account .icon{color:#FFCC00;font-size:100px;line-height:1.2;}
+.account .money{color:#353535;font-size:36px;line-height:1.2;}
+.account .tit{color:#000;font-size:18px;line-height:1.2;}
+.bottoma{display:block;font-size:18px;padding:10px;border-radius:2px;}
+</style>
+<div class="floor account">
+    <div class="icon"><i class="fa fa-diamond"></i></div>
+    <div class="tit">我的余额</div>
+    <div class="money"><small>￥</small><?php echo $login_info['money']; ?></div>
+    <br>
+    <a style="margin:0 10px 10px 10px;background-color:#1aad19;text-align:center;color:white;border:1px solid #179e16;" class="bottoma" href="<?php echo url('user_recharge/add'); ?>">充值</a>
+    <a style="margin:0 10px 10px 10px;background-color:#f1f1f1;text-align:center;color:#000;border:1px solid #bfbfbf;" class="bottoma" href="<?php echo url('user_withdraw/add'); ?>">提现</a>
+</div>
+
+<script type="text/javascript" src="<?php echo http_host(); ?>/js/layer/mobile/layer.js"></script>
+<script>
+function tixian()
+{
+    //页面层
+    layer.open({
+        type: 1
+        ,content: '<div style="padding:15px;"><a style="margin-bottom:10px;background-color:#1aad19;text-align:center;color:white;border:1px solid #179e16;" class="bottoma" onclick="layer.closeAll();" href="javascript:;">银行提现</a><a style="margin-bottom:10px;background-color:#ea5a3d;text-align:center;color:white;border:1px solid #dd2727;" class="bottoma" onclick="layer.closeAll();" href="javascript:;">微信提现</a><a style="background-color:#f1f1f1;text-align:center;color:#000;border:1px solid #bfbfbf;" class="bottoma" onclick="layer.closeAll();" href="javascript:;">取消</a></div>'
+        ,anim: 'up'
+        ,style: 'position:fixed;bottom:0;left:0;width:100%;border:none;'
+    });
+}
+</script>
+{include file="common/footer"/}
+</body></html>

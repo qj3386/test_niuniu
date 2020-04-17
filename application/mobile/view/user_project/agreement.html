@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>认领合同</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<style type="text/css">
+.seal{background:url("<?php echo http_host() . sysconfig('CMS_AGREEMENT_SEAL_COMPANY'); ?>") no-repeat;width:150px;height:150px;position:absolute;top:0px;left:110px;}
+body{font:normal 16px/1.6em Microsoft YaHei,arial,verdana;padding:0;margin:0}
+.wrap{width:1170px;height:auto;margin:0 auto}
+@media (max-width:1200px) {.wrap{width:960px}}
+@media (max-width:992px) {.wrap{width:750px}}
+@media (max-width:767px) {.wrap{width:100%;border:none;margin:0}}
+@media (max-width:480px) {.ylb-text{padding:15px}}
+.ylb-text{padding:15px}
+.ylb-text u{padding:0 5px}
+h1{font-size:24px;line-height:2}
+h2{font-size:16px}
+.center{text-align:center}
+.table{margin:10px auto;width:96%;text-align:center;border-left:1px solid #ddd;border-top:1px solid #ddd}
+.table thead tr td,.table tbody tr td{border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:4px 0;}
+
+.tablec {width: 100%;border-collapse: collapse;border-top: 1px solid #e5e5e5;border-left: 1px solid #e5e5e5;margin-top:15px;margin-bottom:15px;}
+.tablec td {border-right: 1px solid #ddd;border-bottom: 1px solid #e5e5e5;padding:10px;font-size:12px;}
+.tablec td:first-child {width:30%;}
+.tablec tr:nth-child(odd) {background: #f5f5f5;}
+</style>
+<script>
+function download_agreement () {
+    window.open("{:url('download_agreement_pdf')}?agreement_id=<?php echo $post['id']; ?>");
+}
+</script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="background-color:#fff;">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">认领合同</span></div>
+</div>
+</div>
+
+<div class="wrap">
+<div class="ylb-text">
+    <h1 class="center">牛只认领合同</h1>
+    <p>合同编号：<?php echo date('Ymd', $post['add_time']) . '' . $post['id']; ?></p>
+    <p>本认领合同（“本合同”）由以下三方于 <strong><?php echo date('Y年m月d日',$post['add_time']); ?></strong> 签订：</p>
+    <p>甲方（管理方）：<strong><?php echo sysconfig('CMS_COMPANY_NAME'); ?></strong></p>
+    <p>乙方（认领人）：<strong><?php echo $login_info['true_name']; ?></strong></p>
+    <p>丙方（担保方）：<strong><?php echo $post['project']['guarantee_agency']; ?></strong></p>
+    <p>　</p>
+    <p>就乙方通过由甲方运营管理的<?php echo sysconfig('CMS_WEBNAME'); ?>认领平台（域名:<?php echo http_host(); ?>，“<?php echo sysconfig('CMS_WEBNAME'); ?>”）进行其公司运营操作的牛只认领意愿、双方根据平等、自愿的原则，达成如下协议：</p>
+    <h4>一、 认领明细</h4>
+	<table class="tablec">
+		<tbody>
+		<tr>
+			<td>产品名称</td>
+			<td><?php echo $post['title']; ?></td>
+		</tr>
+		<tr>
+			<td>认领人姓名</td>
+			<td><?php echo $login_info['true_name']; ?></td>
+		</tr>
+		<tr>
+			<td>认领人身份证</td>
+			<td><?php echo $login_info['idcard']; ?></td>
+		</tr>
+		<tr>
+			<td>认领本金数额</td>
+			<td><?php echo $post['money']; ?>元</td>
+		</tr>
+		<tr>
+			<td>认领期限(天)</td>
+			<td><?php echo $post['term']; ?>天</td>
+		</tr>
+		<tr>
+			<td>预期认领收益率</td>
+			<td><?php echo ($post['daily_interest'] + $post['hike']); ?>%</td>
+		</tr>
+		<tr>
+			<td>起息日</td>
+			<td><?php echo date("Y-m-d", ($post['add_time'] + 3600 * 24)); ?></td>
+		</tr>
+		<tr>
+			<td>到期日</td>
+			<td><?php echo date("Y-m-d", ($post['add_time'] + 3600 * 24 * $post['term'])); ?></td>
+		</tr>
+		<tr>
+			<td>应收本息(天)</td>
+			<td><?php if ($post['dividend_mode'] != 10000) { ?><?php echo round( ( $post['money'] +  ($post['money'] * ($post['daily_interest'] + $post['hike'])) * 0.01 * $post['term'] ), 2 ); ?>元；<?php } else { ?><?php echo round(pow((1 + ($post['daily_interest'] + $post['hike']) * 0.01), $post['term']) * $post['money'], 2); ?>元；<?php } ?></td>
+		</tr>
+		<tr>
+			<td>还款方式</td>
+			<td><?php echo $post['dividend_mode_text']; ?></td>
+		</tr>
+		</tbody>
+	</table>
+    <h2>二、 认领流程</h2>
+    <p>2.1 本认领合同成立：甲方首先在<?php echo sysconfig('CMS_WEBNAME'); ?>认领APP上发布相关的认领产品项目收益，乙方按照<?php echo sysconfig('CMS_WEBNAME'); ?>认领的规则，通过在<?php echo sysconfig('CMS_WEBNAME'); ?>认领APP上相关的认领产品项目收益，按钮确认认领时，本合同下所约定的关系即成立，本合同的签署关系同时成立。</p>
+    <P>2.2 认领资金冻结：乙方点击“认领”按钮即视为其已经向甲方发出不可撤销的授权指令，授权甲方全权处理和操作本次的认领金额（“乙方<?php echo sysconfig('CMS_WEBNAME'); ?>认领账户”）中的冻结金额等同于本合同认领的本金数额”的资金。上述冻结在本合同生效时或本合同确定失效时（项目周期结束）解除。</P>
+    <p>2.3 认领资金变更：本合同生效的同时，甲方即不可撤销乙方所认领的金额，本金额等同于本合同第一条所列的“收益金额、期限 、返款方式”</p>
+    <h2>三、 认领资金来源保证</h2>
+    <p>3.1 乙方保证其所用于认领资金来源合法，乙方是该资金的合法所有人，如果合法性问题(如盗用他人的银行卡，信用卡等)发生争议，由乙方自行负责解决。如乙方未能解决，因乙方资金安全问题导致账户被相关司法机关冻结或者执行，
+    由乙方自行负责解决相关司法问题。</p>
+    <h2>四、 本息返还方式</h2>
+    <p>4.1 甲方同意并承诺，乙方所认领金的收益金额、期限 、返款方式的执行，甲方负责对乙方所认领金额的收益金额和返款时间的保证，甲方必须按照本合同的约定
+    按时间全额的将其返还到乙方的帐户中。</p>
+    <p>4.2 甲方应在每周期或每日规定的返款时间（每日分红和到期返本金）（不得迟于24:00）将其按照本合同第一条所述的本息，转入乙方的账户。</p>
+    <p>4.3 如果返款日遇到法定假日或公休日，返款日期时间不受影响。</p>
+    <h2>五、 违约</h2>
+    <p>5.1 如果甲方严重违反本合同的协定，如：没能按时的返还乙方的红利及本金，甲方应向乙方支付认领总金额和认领总金额10%作为违约金。乙方须保证其资金来源的合法性不得隐瞒，否则甲方有权冻结其资金移送法办。</p>
+    <p>5.2 乙方保证其提供的信息和资料的真实性，不得提供虚假资料或隐瞒。乙方提供虚假资料或者故意隐瞒，构成违约，应承担违约责任，同时本合同视为提前终止。</p>
+    <p>5.3 发生下列任何一项或几项情形的， (1) 甲方、乙方
+    任何财产遭受没收、征用、查封、扣押、冻结等可能影响其履约能力的不利事件，且不能及时提供有效补救措施的；(2) 提前终止本合同；(3) 采取法律、法规以及本合同约定的其他救济措施。</p>
+    <h2>六、 本合同未经乙方事先书面（包括但不限于电子邮件等方式）同意，甲方不得将本合同项下的任何权利义务转让给任何第三方。</h2>
+    <h2>七、 其他</h2>
+    <p>7.1 本合同在下述条件全部满足时生效：</p>
+    <p>（1）甲方和乙方在本合同（含传真件）上签字盖章、且乙方通过<?php echo sysconfig('CMS_WEBNAME'); ?>认领以网络在线点击：马上认领的方式签订；<br/>
+       （2）自甲方发布的认领项目起，乙方所投项目资金全部在<?php echo sysconfig('CMS_WEBNAME'); ?>认领账户中本金将被冻结直至项目周末结束。</p>
+    <p>7.2 本合同的任何修改、补充均须以<?php echo sysconfig('CMS_WEBNAME'); ?>认领平台电子文本形式作出。</p>
+    <p>7.3 双方均确认，本合同的签订、生效和履行以不违反法律为前提。如果本合同中的任何一条或多条违反适用的法律，则该条将被视为无效，但该无效条款并不影响本合同其他条款的效力。</p>
+    <p>7.4 如果双方在本合同履行过程中发生任何争议，应友好协商解决；如协商不成，则提交所在地的人民法院进行诉讼。</p>
+    <p>7.5 甲方保留与本合同有关的书面文件或电子信息。</p>
+    <!-- <div oncontextmenu="window.event.returnValue=false" style="width:80%;height:150px;line-height:150px;position:relative;">
+        <span>法定代表人或授权代表（签字或盖章）</span>
+        <div class="seal" oncontextmenu="window.event.returnValue=false"></div>
+    </div> -->
+	<div class="signature" style="margin:20px 0 20px;">
+		<div class="party" style="position:relative;float:left;width:50%">
+			<p style="min-height:52px;">甲方：<?php echo sysconfig('CMS_COMPANY_NAME'); ?></p>
+			<span style="font-size:14px;"><?php echo date('Y年m月d日',$post['add_time']); ?></span>
+			<img style="position:absolute;top:-20px;left:40px;width:100px;height:100px;" src="<?php echo http_host() . sysconfig('CMS_AGREEMENT_SEAL_COMPANY'); ?>" oncontextmenu="window.event.returnValue=false">
+		</div>
+		<div class="party" style="float:right;width:50%">
+			<p style="min-height:52px;">乙方：<?php echo $login_info['true_name']; ?></p>
+			<span style="font-size:14px;"><?php echo date('Y年m月d日',$post['add_time']); ?></span>
+		</div>
+		<div class="party" style="position:relative;padding:25px 0;clear:both;">
+			<p>丙方：<?php echo $post['project']['guarantee_agency']; ?></p>
+			<span style="font-size:14px;"><?php echo date('Y年m月d日',$post['add_time']); ?></span>
+			<img style="position:absolute;top:0;left:100px;width:120px;height:120px;" src="<?php echo http_host() . sysconfig('CMS_AGREEMENT_SEAL_GUARANTEE_AGENCY'); ?>" oncontextmenu="window.event.returnValue=false">
+		</div>
+	</div>
+</div>
+</div>
+
+<div style="height:60px;display:none;">
+<div class="am-fixed am-fixed-bottom"><div class="am-button-bottom-container">
+<button class="am-button" onclick="download_agreement()">下载合同</button>
+</div></div></div>
+
+</body></html>

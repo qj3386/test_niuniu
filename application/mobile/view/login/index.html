@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>登录</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+<style>
+.account{text-align:center;margin-top:20px;}
+.account .icon{color:#FFCC00;font-size:100px;}
+.bottoma{display:block;font-size:18px;padding:10px;border-radius:2px;}
+
+.adr_add{margin:0 10px;}
+.adr-form-group{margin-top:10px;}
+.adr-form-group input[type=text],.adr-form-group input[type=password]{display:block;width:100%;font-size:16px;padding:12px;color:#777;vertical-align:middle;background-color:#fff;background-image:none;border:1px solid #ddd;border-radius:0;box-sizing:border-box;}
+
+.reg a{color:#2393df;}
+</style>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">登录</span></div>
+</div>
+</div>
+
+<form id="myform" method="post" action="" class="" role="form">
+<div class="am-list am-list-form">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>账号</div>
+    <div class="am-list-control">
+      <input value="" type="text" name="user_name" id="user_name" placeholder="请输入手机号/用户名">
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>密码</div>
+    <div class="am-list-control">
+      <input value="" type="password" name="password" id="password" placeholder="请输入密码">
+    </div>
+  </div>
+</div>
+<div style="padding:0 15px;">
+<button onclick="dosubmit()" type="button" class="am-button">立即登录</button>
+<a style="margin-top:10px;" href="<?php echo url('login/register'); ?>" class="am-button am-button-bottom-secondary">注册成为牧场主</a></div>
+</form>
+
+<div class="box reg">
+<span style="float:right;margin-top:6px;margin-right:15px;"><a href="<?php echo url('login/resetpwd'); ?>">忘记密码？</a></span>
+</div><br><br>
+
+<script type="text/javascript" src="<?php echo http_host(); ?>/js/layer/mobile/layer.js"></script>
+<script>
+if (getCookie('mobile_user_name')) {
+	document.getElementById('user_name').value = getCookie('mobile_user_name');
+}
+
+function dosubmit()
+{
+    var user_name = $("#user_name").val();
+    var password = $("#password").val();
+    
+    if (user_name == '') {
+        //提示
+        layer.open({
+            content: '账号不能为空'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+    
+    if (is_mobile_number(user_name) != true) {
+        //提示
+        layer.open({
+            content: '账号不存在'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+    
+    if (password == '') {
+        //提示
+        layer.open({
+            content: '密码不能为空'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+
+    setCookie('mobile_user_name', user_name, 24 * 60 * 60 * 1000);
+    $("#myform").submit();
+}
+
+function setCookie(name, value, expire)
+{
+	expire = expire || 24 * 60 * 60 * 1000; //此 cookie 将被保存 30 天
+	var exp  = new Date(); //new Date("December 31, 9998");
+	exp.setTime(exp.getTime() + expire);
+	document.cookie = name + "="+ escape(value) +";expires="+ exp.toGMTString();
+}
+function getCookie(name)
+{
+	var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+	if(arr != null) return unescape(arr[2]); return null;
+}
+function delCookie(name)
+{
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval=getCookie(name);
+	if(cval!=null) document.cookie=name +"="+cval+";expires="+exp.toGMTString();
+}
+
+//判断是否为手机号的正则表达式
+function is_mobile_number(mobile) {
+	var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+	if (!myreg.test(mobile)) {
+		console.log('手机号格式不正确')
+        return false;
+	} else {
+		console.log('手机号格式正确')
+        return true;
+	}
+}
+</script>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

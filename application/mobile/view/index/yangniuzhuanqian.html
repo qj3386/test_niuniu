@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title><?php echo sysconfig('CMS_WEBNAME'); ?></title>
+<meta name="robots" content="noindex,nofollow" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head><body ontouchstart="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">详情</span></div>
+</div>
+</div>
+
+<style>.video_box iframe{width:100%;height:100%;}</style>
+<div style="width:100%;height:400px;" class="video_box"><?php echo sysconfig('CMS_MUCHANG_VIDEO'); ?></div>
+
+<div style="padding:10px 20px;"><a href="{:url('login/register')}" class="am-button" style="background-color:#00cc9f;">立即成为牧场主</a></div>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

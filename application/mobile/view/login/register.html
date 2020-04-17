@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>注册</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">注册</span></div>
+</div>
+</div>
+
+<form id="myform" method="post" action="{:url('login/register')}" class="ajax_post_submit" role="form">
+<div class="am-list am-list-form">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>手机号</div>
+    <div class="am-list-control">
+      <input id="mobile" name="mobile" type="text" placeholder="请输入手机号" value="">
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>密码</div>
+    <div class="am-list-control">
+      <input id="password" name="password" type="password" placeholder="请输入登录密码" value="">
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>确认密码</div>
+    <div class="am-list-control">
+      <input id="re_password" name="re_password" autocomplete="off" type="password" class="" placeholder="再次输入密码" value="">
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>校验码</div>
+    <div class="am-list-control">
+      <input id="captcha" name="captcha" type="text" placeholder="请输入右侧校验码" value="">
+    </div>
+    <div class="am-list-button">
+      <img style="width:94px;height:34px;" src="{:url('index/get_verifycode_image')}" id="captcha-img" onclick="javascript:document.getElementById('captcha-img').src='{:url('index/get_verifycode_image')}?random=' + Math.random();">
+    </div>
+  </div>
+  <?php if (sysconfig('CMS_IS_SMS_REGISTRATION_VERIFICATION') == 1) { ?><div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red">*</font>短信验证码</div>
+    <div class="am-list-control">
+      <input id="smscode" name="smscode" type="text" placeholder="请输入短信验证码" value="">
+    </div>
+    <div class="am-list-button">
+      <button type="button" id="getsmscode" onclick="getSmsCode()">获取验证码</button>
+    </div>
+  </div><?php } ?>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label"><font color="red"></font>推荐人</div>
+    <div class="am-list-control">
+      <input id="parent_id" name="parent_id" type="text" placeholder="推荐人手机号(没有可不填)" value="<?php if(session('mobile_user_invite_code')) { echo session('mobile_user_invite_code'); } ?>">
+    </div>
+  </div>
+</div>
+<div style="padding:5px 20px 5px 20px;"><button onclick="dosubmit()" type="button" class="am-button">立即注册</button></div>
+</form>
+
+<div style="margin:0 20px;color:#999;">
+<a style="font-size:16px;" href="<?php echo url('login/index'); ?>">已有账号</a></span>
+</div>
+
+<script>
+//获取验证码
+function getSmsCode()
+{
+    var obj = $("#getsmscode");
+
+    var captcha = $("#captcha").val();
+	// 验证手机号码
+	var mobile = $("#mobile").val();
+    if (mobile == '') {
+        layer.open({
+            content: '请输入11位手机号'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		$('#mobile').focus();
+        return false;
+    }
+    var myreg=/^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+	if (!myreg.test(mobile)) {
+		layer.open({
+            content: '手机号格式不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		$('#mobile').focus();
+        return false;
+	}
+    if (captcha == '') {
+		layer.open({
+            content: '请输入校验码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		$('#captcha').focus();
+        return false;
+	}
+    if (captcha.length != 4) {
+		layer.open({
+            content: '校验码不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		$('#captcha').focus();
+        return false;
+	}
+    // 验证手机号码
+    $.ajax({
+		type: "GET",
+		url: '{:url("getsmscode")}',
+		data: { mobile: mobile, type: 1, captcha: captcha },
+		dataType:"json",
+		success: function (res) {
+			console.log(res);
+			if (res.code == 0) {
+				layer.open({
+					content: '验证码已发送，请注意查收'
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+				settime(obj); //倒计时
+			} else {
+                layer.open({
+					content: res.msg
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+				});
+				return;
+			}
+		},
+		error: function (res) {
+			alert('请求失败，请稍后再试');
+		}
+	});
+}
+
+var countdown = 60;
+function settime(obj)
+{
+    if (countdown == 0) {
+        obj.attr('disabled',false);
+        obj.text("获取验证码");
+        countdown = 60;
+        return;
+    } else {
+        obj.attr('disabled',true);
+        obj.text("" + countdown + "S");
+        countdown--;
+    }
+
+    setTimeout(function () {
+        settime(obj);
+    }, 1000);
+}
+
+function dosubmit()
+{
+    var mobile = $("#mobile").val();
+    var password = $("#password").val();
+    var re_password = $("#re_password").val();
+    var parent_id = $("#parent_id").val();
+    var smscode = $("#smscode").val();
+    
+    if (mobile == '') {
+        layer.open({
+            content: '请输入11位手机号'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    var myreg=/^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+	if (!myreg.test(mobile)) {
+		layer.open({
+            content: '手机号格式不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+	}
+    if (password == '') {
+        layer.open({
+            content: '请输入6-16个字符的密码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    if (password.length < 6 || password.length > 16) {
+		layer.open({
+            content: '请输入6-16个字符的密码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		return false;
+	}
+    if (re_password == '') {
+        layer.open({
+            content: '请输入确认密码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    if (password != re_password) {
+        layer.open({
+            content: '两次密码不一致'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    <?php if (sysconfig('CMS_IS_SMS_REGISTRATION_VERIFICATION') == 1) { ?>if (smscode.length == '') {
+		layer.open({
+            content: '请输入短信验证码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+	}
+    if (smscode.length != 4) {
+		layer.open({
+            content: '短信验证码不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+	}<?php } ?>
+
+	setCookie('mobile_user_name', mobile, 24 * 60 * 60 * 1000);
+    $("#myform").submit();
+}
+
+function setCookie(name, value, expire)
+{
+	expire = expire || 24 * 60 * 60 * 1000; //此 cookie 将被保存 30 天
+	var exp  = new Date(); //new Date("December 31, 9998");
+	exp.setTime(exp.getTime() + expire);
+	document.cookie = name + "="+ escape(value) +";expires="+ exp.toGMTString();
+}
+</script>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title><?php echo sysconfig('CMS_WEBNAME'); ?></title>
+<meta name="robots" content="noindex,nofollow" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head><body ontouchstart="">
+
+<div style="height:47px;"><div style="width:100%;border-bottom:1px solid #efefef;height:46px;line-height:46px;text-align:center;background:#fff;position:fixed;top:0;z-index:999999;"><a href=""><img style="height:36px;width:auto;margin:5px 0;" src="<?php echo sysconfig('CMS_LOGO_INDEXTOP_IMAGE'); ?>"></a><?php if (!empty($login_info)) { ?><a style="position:absolute;right:10px;font-size:14px;color:#108ee9;letter-spacing:1px;" href="{:url('user/index')}"><?php if (!empty($login_info['true_name'])) { echo '您好,' . $login_info['true_name']; } else { echo '会员中心'; } ?></a><?php } else { ?><a style="position:absolute;right:10px;font-size:14px;color:#108ee9;letter-spacing:1px;" href="{:url('login/index')}">注册/登录</a><?php } ?></div></div>
+
+<?php if ($slide_list) { ?>
+<!--顶部滚动广告栏-start-->
+<div class="tbanner">
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        <?php foreach($slide_list as $k=>$v){ ?>
+            <div class="swiper-slide"><a href="<?php echo $v['url']; ?>"><img src="<?php echo $v['pic']; ?>" alt="<?php echo $v['title']; ?>"></a></div>
+        <?php } ?>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+    </div>
+</div>
+<link rel="stylesheet" href="/css/swiper.min.css">
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<style>
+.swiper-container{width:100%;height:auto;}
+.swiper-slide{text-align:center;font-size:18px;background:#fff;}
+.swiper-slide img{width:100%;height:50vw;}
+</style>
+<script>
+//Swiper轮播
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    paginationClickable: true,
+    autoHeight: true, //enable auto height
+    slidesPerView: 1,
+    paginationClickable: true,
+    spaceBetween: 30,
+    loop: true,
+    centeredSlides: true,
+    autoplay: 3000,
+    autoplayDisableOnInteraction: false
+});
+</script>
+<!--顶部滚动广告栏-end-->
+<?php } ?>
+
+<div class="am-notice" role="alert">
+    <div class="am-notice-content">
+        <marquee scrollamount="3" style="vertical-align:middle;"><?php echo sysconfig('CMS_STATION_NOTICE'); ?></marquee>
+    </div>
+</div>
+
+<!--菜单-start-->
+<div class="am-grid am-grid-col-5 am-grid-radius" style="border-top:1px solid #f5f5f5;border-bottom:1px solid #f5f5f5;">
+  <a href="<?php echo url('project_farm/index'); ?>" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="border-radius:0;"><img src="/images/mobile/icon_home_module_1.png" /></div>
+    <div class="am-grid-item-content"><div class="am-grid-item-title">合作牧场</div></div>
+  </a>
+  <a href="<?php echo url('page/detail'); ?>?id=anquanbaozhang" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="border-radius:0;"><img src="/images/mobile/icon_home_module_2.png" /></div>
+    <div class="am-grid-item-content"><div class="am-grid-item-title">安全保障</div></div>
+  </a>
+  <a href="<?php echo url('page/detail'); ?>?id=jianjie" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="border-radius:0;"><img src="/images/mobile/icon_home_module_3.png" /></div>
+    <div class="am-grid-item-content"><div class="am-grid-item-title">企业介绍</div></div>
+  </a>
+  <a href="<?php echo url('user/signin'); ?>" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="border-radius:0;"><img src="/images/mobile/icon_home_module_4.png" /></div>
+    <div class="am-grid-item-content"><div class="am-grid-item-title">牧场签到</div></div>
+  </a>
+  <a href="<?php echo url('user/referral'); ?>" class="am-grid-item">
+    <div class="am-grid-item-thumb" style="border-radius:0;"><img src="/images/mobile/icon_home_module_5.png" /></div>
+    <div class="am-grid-item-content"><div class="am-grid-item-title">邀请好友</div></div>
+  </a>
+</div>
+<!--菜单-end-->
+
+<a href="{:url('index/yangniuzhuanqian')}" style="background-color:#fff;display:block;">
+<img src="/images/mobile/yangniuzhuanqian.gif" style="display:block;width:94%;height:auto;margin:0 auto;border-radius:20px;">
+</a>
+
+<?php if ($project_type) { ?>
+<div class="com_moduleList" style="">
+<?php foreach ($project_type as $k=>$v) { ?>
+<div class="com_module"><div class="cml_title"><span><font style="vertical-align: inherit;"><?php echo $v['name']; ?></font></span></div>
+<div class="cml_content" style="padding-top: 0px;">
+<?php if ($v['project_list']) { foreach ($v['project_list'] as $key=>$value) { ?>
+<div class="com_mdoule"><a href="{:url('project/detail')}?id=<?php echo $value['id']; ?>" class="db"><div class="c_m_img"><img src="<?php echo $value['cover']; ?>"> <div class="c_m_i_name"><span class="icon_label type_1"><font style="vertical-align: inherit;"><?php echo $value['breed']; ?></font></span> <span class="icon_label type_2"><font style="vertical-align: inherit;"><?php echo $value['gender']; ?></font></span>
+</div></div> <div class="c_m_content"><div class="c_m_label"><img src="/images/mobile/5e7b1ed8bedc6.png"></div> <div class="c_m_item flex"><div class="info flex_2"><div class="price"><font style="vertical-align: inherit;">¥<?php echo round($value['min_buy_money'] * $value['daily_interest'] / 100, 2); ?></font></div> <div class="text"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal('培育预计日利润'); ?></font></div></div> <div class="info flex_1 type_2"><div class="price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $value['term']; ?>天</font></font></div> <div class="text"><font style="vertical-align: inherit;">饲养期</font></div></div></div>
+<!-- <div class="progressBox1" style="margin-bottom:.05rem;margin-top:0;">
+	<div class="progress1" style="width:<?php echo round($value['sale'] * 100 / ($value['sale'] + $value['stock']), 2); ?>%;background:#ff6600;"></div>
+	<span class="progressNum1" style="font-size:12px;left:30px;">已认领<?php echo intval($value['sale']); ?>头,剩余<?php echo $value['stock']; ?>头</span>
+</div> -->
+<div class="c_m_btn"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal($value['min_buy_money'] . '元认领'); ?></font></div></div></a></div>
+<?php } } ?></div></div><?php } ?></div><?php } ?>
+
+<!-- 回到顶部 -->
+<div class="go_top" id="go_top" style="display:none;display:block;width:24px;height:24px;padding:5px;border-radius:50%;position:fixed;bottom:120px;right:15px;border:1px solid #ccc;background:#f2f2f2;"><img src="/images/mobile/gotop.png" style="width:24px;height:24px;border-radius:50%;overflow:hidden;"></div>
+
+<?php if (sysconfig('CMS_HOME_ACTIVITY_STATUS') == 1) { ?>
+<!-- 活动弹窗start -->
+<div class="huodongbg" style="width:100%;height:100%;position:fixed;top: 0;left:0;background-color:rgba(0,0,0,0.35);z-index:9999999;">
+	<div style="width:300px;height:200px;position:fixed;top:0;left:0;right:0;bottom:0;margin:auto;background-color:#666;">
+		<a href="javascript:;" onclick="huodong_hide()" style="width:110px;height:25px;line-height:25px;text-align:center;position:absolute;right:8px;top:8px;border:1px solid #fff;color:#fff;border-radius:5px;">关闭活动广告</ a>
+		<a href="<?php echo sysconfig('CMS_HOME_ACTIVITY_URL'); ?>"><img src="<?php echo sysconfig('CMS_HOME_ACTIVITY_IMAGE'); ?>" width="300px" height="200px" /></a>
+	</div>
+</div>
+<!-- 活动弹窗end -->
+<?php } ?>
+
+{include file="common/footer"/}
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+
+<script>
+if (sessionStorage.getItem('huodongbg_hide')) {
+	$('.huodongbg').hide();
+}
+function huodong_hide()
+{
+	$('.huodongbg').hide();
+	sessionStorage.setItem('huodongbg_hide', '1');
+}
+</script>
+</body></html>

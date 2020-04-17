@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>关于我们</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">关于我们</span></div>
+</div>
+</div>
+
+<?php if ($list) { ?>
+<div class="am-list">
+    <div class="am-list-body ">
+        <?php $login_info = session('mobile_user_info'); foreach ($list as $k=>$v) { if ($v['is_auth'] == 0 || !empty($login_info['bank_card_number'])) { ?>
+        <a href="{:url('page/detail')}?id=<?php echo $v['filename']; ?>" class="am-list-item am-list-item-indent line-thumb">
+            <?php if (!empty($v['litpic'])) { ?><div class="am-list-thumb"><img style="width:24px;height:24px;" src="<?php echo $v['litpic']; ?>" alt=""></div><?php } ?>
+            <div class="am-list-content"><?php echo $v['title']; ?></div>
+            <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+        </a>
+        <?php } } ?>
+    </div>
+</div>
+<?php } ?>
+
+<div style="padding:0 15px;text-align:center;color:red;font-size:12px;">全国统一服务热线：<?php echo sysconfig('CMS_CONSUMER_HOTLINE'); ?> 官方QQ客服：<?php echo sysconfig('CMS_CONSUMER_QQ'); ?> <?php if (sysconfig('CMS_CONSUMER_QQ_TWO')) { ?>QQ客服②：<?php echo sysconfig('CMS_CONSUMER_QQ_TWO'); ?><?php } ?></div>
+<div style="padding:2px 15px;text-align:center;color:#333;font-size:12px;">Copyright © 2020 &nbsp;<?php echo sysconfig('CMS_COMPANY_NAME'); ?> 版权所有</div>
+<style>.jdb_fot_3 img{height:28px;margin-bottom:2px;}</style>
+<div class="jdb_fot_3" style="text-align:center;padding:2px 5px;margin-bottom:10px;">
+<img src="/images/mobile/auth_ppgw.png">
+<img src="/images/mobile/auth_gwyz.png">
+<img src="/images/mobile/auth_aqwz.png">
+<img src="/images/mobile/label_sm_90020.png">
+<img src="/images/mobile/photo6271805803522533530.jpg">
+<img src="/images/mobile/photo6271805803522533531.jpg">
+</div>
+
+{include file="common/footer"/}
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

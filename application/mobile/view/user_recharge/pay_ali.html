@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>支付宝充值</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/base64.js"></script>
+<script type="text/javascript" src="/js/canvas2image.js"></script>
+<script type="text/javascript" src="/js/html2canvas.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="background-color:#00A0E9;">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="{:url('user/index')}"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">支付宝充值</span></div>
+</div>
+</div>
+
+<div style="color:#fff;text-align:center;font-size:20px;padding:20px 0;">支付宝充值 {$money} 元</div>
+
+<div style="padding:0;">
+	<img id="qrcode" src="<?php echo sysconfig('CMS_PAY_ALI_IMAGE'); ?>" style="width:100%;height:auto;">
+</div>
+
+<div style="padding:20px;font-size:16px;color:#fff;line-height:1.2;background-color:#00A0E9;">
+支付宝充值步骤：<br>
+1、截图二维码保存到手机相册<br>
+2、打开支付宝扫一扫，右上角选择相册<br>
+3、选择保存的二维码完成支付即可<br>
+</div>
+
+<script>
+layer.open({
+	content: '请在十分钟之内完成支付'
+	,skin: 'msg'
+	,time: 5 //5秒后自动关闭
+});
+</script>
+</body></html>

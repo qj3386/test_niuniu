@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>银行入款充值</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="{:url('user/index')}"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">银行入款充值</span></div>
+</div>
+</div>
+
+<div style="color:#666;text-align:center;font-size:20px;padding-top:15px;padding-bottom:5px;">银行入款 {$money} 元</div>
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+
+<div class="am-list am-list-form" style="padding-bottom:0;">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">收款银行：</div>
+    <div class="am-list-control">
+      <input id="bank_name" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_NAME'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_bank_name" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+  <?php if (!empty(sysconfig('CMS_PAY_BANK_BRANCH'))) { ?>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">开户支行：</div>
+    <div class="am-list-control">
+      <input id="bank_branch" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_BRANCH'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_bank_branch" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+  <?php } ?>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">　收款人：</div>
+    <div class="am-list-control">
+      <input id="payee" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_PAYEE'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_payee" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">收款账号：</div>
+    <div class="am-list-control">
+      <input id="account" type="text" value="<?php echo sysconfig('CMS_PAY_BANK_ACCOUNT'); ?>" readonly="readonly">
+    </div>
+    <div class="am-list-button">
+      <button class="cp_account" type="button" style="width:72px;">复制</button>
+    </div>
+  </div>
+</div>
+
+<!-- <form class="ajax_post_submit" id="myform" method="post" action="{:url('pay_bank')}" role="form">{:token()}
+<input name="id" id="id" type="text" value="{$id}" style="display:none;">
+<div class="am-list am-list-form" style="padding-bottom:0;">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">　转账人：</div>
+    <div class="am-list-control">
+      <input name="payer" id="payer" type="text" placeholder="请输入转账人姓名" value="">
+    </div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">转账附言：</div>
+    <div class="am-list-control">
+      <input name="note" id="note" type="text" placeholder="请输入转账附言" value="">
+    </div>
+  </div>
+</div>
+
+<div style="padding:15px 20px;">
+<button onclick="dosubmit()" type="button" class="am-button">提交</button>
+</div>
+</form> -->
+
+<div style="padding:20px;font-size:16px;color:#666;line-height:1.3;">温馨提示：选择银行卡充值请复制（收款人、收款账号）到您的网银或手机银行选择实时到账进行转账充值，转账成功后即可自动到账！</div>
+
+<script type="text/javascript">
+function dosubmit()
+{
+	var payer = $("#payer").val();
+	var note = $("#note").val();
+
+    if (payer == '') {
+		layer.open({
+            content: '请输入转账人姓名'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+	if(payer.length < 2 || payer.length > 90){
+		layer.open({
+            content: '转账人姓名格式不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		return false;
+	}
+    $("#myform").submit();
+}
+
+var bank_name = $("#bank_name").val();
+var bank_branch = $("#bank_branch").val();
+var payee = $("#payee").val();
+var account = $("#account").val();
+//收款银行
+var clipboard_bank_name = new Clipboard('.cp_bank_name', {
+	text: function() {
+		return bank_name;
+	}
+});
+clipboard_bank_name.on('success', function(e) {
+	layer.open({
+		content: '收款银行复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_bank_name.on('error', function(e) {
+	console.log(e);
+});
+//开户支行
+var clipboard_bank_branch = new Clipboard('.cp_bank_branch', {
+	text: function() {
+		return bank_branch;
+	}
+});
+clipboard_bank_branch.on('success', function(e) {
+	layer.open({
+		content: '开户支行复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_bank_branch.on('error', function(e) {
+	console.log(e);
+});
+//收款人
+var clipboard_payee = new Clipboard('.cp_payee', {
+	text: function() {
+		return payee;
+	}
+});
+clipboard_payee.on('success', function(e) {
+	layer.open({
+		content: '收款人复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_payee.on('error', function(e) {
+	console.log(e);
+});
+//收款账号
+var clipboard_account = new Clipboard('.cp_account', {
+	text: function() {
+		return account;
+	}
+});
+clipboard_account.on('success', function(e) {
+	layer.open({
+		content: '收款账号复制成功'
+		,skin: 'msg'
+		,time: 2 //2秒后自动关闭
+	});
+});
+clipboard_account.on('error', function(e) {
+	console.log(e);
+});
+</script>
+</body></html>

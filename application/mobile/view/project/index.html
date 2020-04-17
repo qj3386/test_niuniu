@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title><?php if (isset($post['name'])) { echo $post['name']; } else { echo '领养'; } ?></title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;"><?php if (isset($post['name'])) { echo $post['name']; } else { echo '领养'; } ?></span></div>
+</div>
+</div>
+
+<?php if ($project_type) { ?>
+<div class="com_moduleList" style="">
+<?php foreach ($project_type as $k=>$v) { ?>
+<div class="com_module"><div class="cml_title"><span><font style="vertical-align: inherit;"><?php echo $v['name']; ?></font></span></div>
+<div class="cml_content" style="padding-top: 0px;">
+<?php if ($v['project_list']) { foreach ($v['project_list'] as $key=>$value) { ?>
+<div class="com_mdoule"><a href="{:url('project/detail')}?id=<?php echo $value['id']; ?>" class="db"><div class="c_m_img"><img src="<?php echo $value['cover']; ?>"> <div class="c_m_i_name"><span class="icon_label type_1"><font style="vertical-align: inherit;"><?php echo $value['breed']; ?></font></span> <span class="icon_label type_2"><font style="vertical-align: inherit;"><?php echo $value['gender']; ?></font></span>
+</div></div> <div class="c_m_content"><div class="c_m_label"><img src="/images/mobile/5e7b1ed8bedc6.png"></div> <div class="c_m_item flex"><div class="info flex_2"><div class="price"><font style="vertical-align: inherit;">¥<?php echo round($value['min_buy_money'] * $value['daily_interest'] / 100, 2); ?></font></div> <div class="text"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal('培育预计日利润'); ?></font></div></div> <div class="info flex_1 type_2"><div class="price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $value['term']; ?>天</font></font></div> <div class="text"><font style="vertical-align: inherit;">饲养期</font></div></div></div>
+<!-- <div class="progressBox1" style="margin-bottom:.05rem;margin-top:0;">
+	<div class="progress1" style="width:<?php echo round($value['sale'] * 100 / ($value['sale'] + $value['stock']), 2); ?>%;background:#ff6600;"></div>
+	<span class="progressNum1" style="font-size:12px;left:30px;">已认领<?php echo intval($value['sale']); ?>头,剩余<?php echo $value['stock']; ?>头</span>
+</div> -->
+<div class="c_m_btn"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal($value['min_buy_money'] . '元认领'); ?></font></div></div></a></div>
+<?php } } ?></div></div><?php } ?></div><?php } ?>
+
+<!-- 回到顶部 -->
+<div class="go_top" id="go_top" style="display:none;display:block;width:24px;height:24px;padding:5px;border-radius:50%;position:fixed;bottom:120px;right:15px;border:1px solid #ccc;background:#f2f2f2;"><img src="/images/mobile/gotop.png" style="width:24px;height:24px;border-radius:50%;overflow:hidden;"></div>
+
+{include file="common/footer"/}
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

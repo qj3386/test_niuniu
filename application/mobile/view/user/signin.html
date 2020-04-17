@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>签到</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="background-color:#ffffff;">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">签到</span></div>
+</div>
+</div>
+
+<a href="javascript:dosubmit();">
+    <img src="<?php echo sysconfig('CMS_SIGN_BACKGROUND_IMAGE'); ?>" style="width:100%;height:auto;">
+</a>
+
+<script type="text/javascript" src="<?php echo http_host(); ?>/js/layer/mobile/layer.js"></script>
+<script>
+function dosubmit()
+{
+	var url = '<?php echo url('user/signin'); ?>';
+	$.post(url,{content:1},function(res)
+	{
+        //提示
+        layer.open({
+            content: res.msg
+            ,btn: '确定'
+        });
+	},'json');
+}
+</script>
+</body></html>

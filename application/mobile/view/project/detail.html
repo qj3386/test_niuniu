@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title><?php echo $post['title']; ?></title>
+<meta name="description" content="<?php echo $post['description']; ?>" />
+<meta name="keywords" content="<?php echo $post['keywords']; ?>" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mobile/public.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">详情</span></div>
+</div>
+</div>
+
+<style>
+.p_banner {position: fixed;top:46px;width: 100%;height: 2.4rem;z-index: 1;}
+.p_banner img{display:block;width:100%;height:100%;}
+/* 产品详情 */
+.prdouct .p_main { padding: 2.4rem .12rem 0 .12rem; z-index: 2; position: relative; }
+.prdouct .p_module { position: relative; background-color: #fff; padding: .05rem .12rem .12rem .12rem; border-radius: .12rem; top: -.4rem; }
+.prdouct .p_revise { margin-top: -.3rem; }
+.prdouct .p_tariff { text-align: center; padding: .08rem 0; }
+.prdouct .p_tariff .price {line-height: .45rem; font-size: .34rem; }
+.prdouct .p_tariff .text { }
+.prdouct .p_tariff.type_2 .price { color: #ff373c; }
+.prdouct .p_tariff.type_2 .text { color: #999; }
+.prdouct .p_module .p_m_title {padding: .1rem 0 .08rem 0;line-height: .24rem;height: .24rem;position: relative;}
+.prdouct .p_module .p_m_title span {border-left:.05rem solid #00cc9f;padding-left:.08rem;font-size: .16rem;font-weight: bold;position: relative;z-index: 1;}
+.prdouct .p_module .p_m_title .look { float: right; color: #999; font-size: .14rem; }
+.prdouct .p_module .p_m_title .img {display: block; width: auto;height: .24rem;position: absolute;right: 0;top: .1rem;}
+.prdouct .p_module .p_m_content { overflow-x: auto; }
+.prdouct .p_module .p_m_content > img { display: block; width: 100%; padding-bottom: .08rem; }
+.prdouct .p_module .p_m_content .p_m_video { display: block; width: 100%;}
+.prdouct .p_module .p_m_detail { background: linear-gradient(#fff, #cbf5ec); background: -webkit-linear-gradient(#fff, #cbf5ec); border-radius: .12rem; }
+.prdouct .p_module .p_m_detail .p_m_d_item { padding: .05rem .1rem .1rem .1rem; }
+.prdouct .p_module .p_m_btn { line-height: .4rem; background-color: #fff; border-radius: .05rem; display: block; margin-top: .1rem; padding-left: .55rem; background-repeat: no-repeat; background-size: .25rem; background-position: .15rem center; }
+.prdouct .p_module .p_m_info { line-height: .24rem; font-size: .15rem; white-space: nowrap; overflow: hidden; }
+.prdouct .p_module .p_m_info span { float: left; width: .8rem; color: #888; }
+.prdouct .p_module .p_m_btn.type_1 { background-image: url('/images/mobile/icon_bao.png'); }
+.prdouct .p_module .p_m_btn.type_2 { background-image: url(/images/mobile/icon_address.png); }
+.prdouct .p_module + .p_module { margin-top: .1rem; }
+.prdouct .p_protect { position: relative; font-size: 0; }
+.prdouct .p_protect .p_p_li { width: 33.33%; display: inline-block; margin: .1rem 0 .25rem 0; }
+.prdouct .p_protect .p_p_info { position: relative; margin: auto; width: .73rem; height: .7rem; background: linear-gradient(#fff, #cbf5ec); background: -webkit-linear-gradient(#fff, #cbf5ec); text-align: center; border-radius: .04rem; }
+.prdouct .p_protect .p_p_info .core { background-repeat: no-repeat; background-position: center top; line-height: .16rem; font-size: .12rem; color: #00cc9f; padding-top: .34rem; }
+.prdouct .p_protect .p_p_info .core.icon_type_1 { background-image: url('/images/mobile/icon_type_1.png'); background-size: .28rem auto; }
+.prdouct .p_protect .p_p_info .core.icon_type_2 { background-image: url('/images/mobile/icon_type_2.png'); background-size: .27rem auto; }
+.prdouct .p_protect .p_p_info .core.icon_type_3 { background-image: url('/images/mobile/icon_type_3.png'); background-size: .26rem auto; }
+.prdouct .p_protect .p_p_info .core.icon_type_4 { background-image: url('/images/mobile/icon_type_4.png'); background-size: .24rem auto; }
+.prdouct .p_protect .p_p_info .core.icon_type_5 { background-image: url('/images/mobile/icon_type_5.png'); background-size: .21rem auto; }
+.prdouct .p_protect .p_p_info .core.icon_type_6 { background-image: url('/images/mobile/icon_type_6.png'); background-size: .27rem auto; }
+.prdouct .p_protect .type_line { position: absolute; width: .28rem; height: .02rem; background-color: #dafbf5; left: 29%; top: .44rem; }
+.prdouct .p_protect .type_vertical:before { content: ""; position: absolute; width: .02rem; height: .28rem; background-color: #dafbf5; left: .36rem; top: -46%; }
+.prdouct .p_flow { /* width: 3.65rem; */ }
+.prdouct .p_flow .p_f_item{width: 25%;float: left;text-align: center;}
+.prdouct .p_flow .p_f_item .name { font-size: .16rem; padding: .12rem 0; }
+.prdouct .p_flow .p_f_item .round {position: relative;margin: .12rem auto;width: .12rem;height: .12rem;border-radius: 50%;border: .01rem solid #0ad0a2;background-color: #fff;}
+.prdouct .p_flow .p_f_item .round.icon_line:after { content: ""; position: absolute; width: .76rem; height: .02rem; background-color: #f2f2f2; top: .05rem; left: .14rem; }
+.prdouct .p_flow .p_f_item .time { font-size:14px;padding: .12rem 0 .05rem 0; }
+.prdouct .p_prompt { color: #a6a6a6; line-height: .22rem; padding-bottom: .1rem; margin-top: -.05rem; }
+.prdouct .p_confirmbtn { position: fixed; z-index: 2; bottom: 0; left: 0; width: 100%; height: .44rem; line-height: .44rem; color: #fff; font-size: .18rem; font-weight: bold; text-align: center; background: linear-gradient(#00e6b3, #00cda0); background: -webkit-linear-gradient(#00e6b3, #00cda0); }
+
+</style>
+<div class="p_banner"><img src="<?php echo $post['cover']; ?>"></div>
+
+<div class="prdouct">
+  <div class="p_main">
+    <div class="p_module flex">
+      <div class="p_tariff type_2 flex_1">
+        <div class="price">¥<?php $daily_earnings = round( ($post['min_buy_money'] * $post['daily_interest']) / 100, 2); echo $daily_earnings; ?></div>
+        <div class="text daoxu"><?php echo str_reversal('饲养预计利润'); ?></div></div>
+      <div class="p_tariff flex_1">
+        <div class="price"><?php echo $post['term']; ?>天</div>
+        <div class="text">饲养期</div></div>
+    </div>
+    <div class="p_module">
+      <div class="p_m_title">
+        <span><?php echo $post['title']; ?></span></div>
+      <img src="/images/mobile/5e7b1ed8bedc6.png" class="img" style="height: 0.24rem;">
+      <div class="p_m_content">
+        <div class="p_m_detail flex">
+          <div class="p_m_d_item flex_1">
+            <div class="p_m_info">
+              <span>品种</span><?php echo $post['breed']; ?></div>
+            <div class="p_m_info">
+              <span>月龄</span><?php echo $post['month_old']; ?>月</div>
+            <div class="p_m_info">
+              <span>体重（约）</span><?php echo $post['body_weight']; ?>kg</div>
+            <div class="p_m_info">
+              <span><font class="daoxu"><?php echo str_reversal($post['dividend_mode_text']); ?></font></span></div>
+              <a href="{:url('page/detail')}?id=gongsizizhi" class="p_m_btn type_2" style="color:#333;">公司资质</a>
+		  </div>
+          <div class="p_m_d_item flex_1">
+            <div class="p_m_info">
+              <span>产地来源</span>{$post['project_farm']['position']}</div>
+            <div class="p_m_info">
+              <span>健康状况</span>健康</div>
+            <div class="p_m_info">
+              <span>性别</span><?php echo $post['gender']; ?></div>
+            <div class="p_m_info">
+              <span><font class="daoxu"><?php echo str_reversal('预期总收益'); ?></font></span>¥<?php $total_revenue = 0; $total_revenue = round( $daily_earnings * $post['term'], 2 ); echo $total_revenue; ?></div>
+            <a href="{:url('page/detail')}?id=niuzhibaodan" class="p_m_btn type_1" style="color:#333;">牛只保单</a>
+		  </div>
+        </div>
+      </div>
+    </div>
+    <div class="p_module">
+      <div class="p_m_title"><span>所属牧场</span></div>
+      <div class="p_m_content">
+        <img src="{$post['project_farm']['litpic']}">
+        <div class="p_m_info"><span>牧场名称</span><a style="color:#00cc9f;" href="{:url('project_farm/detail')}?id={$post['project_farm']['id']}">{$post['project_farm']['name']}</a></div>
+        <div class="p_m_info"><span>草场面积</span>{$post['project_farm']['area']}亩</div>
+        <div class="p_m_info"><span>牧场位置</span>{$post['project_farm']['position']}</div>
+	  </div>
+    </div>
+    <div class="p_module">
+		<div class="p_m_title"><span>牧场视频</span></div>
+		<div class="p_m_content">
+			<style>.video_box iframe{width:100%;height:100%;}</style>
+			<div style="width:100%;height:220px;" class="video_box"><?php echo sysconfig('CMS_MUCHANG_VIDEO'); ?></div>
+		</div>
+	</div>
+    <div class="p_module">
+      <div class="p_m_title">
+        <span>安全保障</span></div>
+      <div class="p_m_content">
+        <div class="p_protect">
+          <div class="p_p_li">
+            <div class="p_p_info">
+              <div class="core icon_type_1">
+                <p>自有牧场</p>
+                <p>政企合作</p>
+              </div>
+            </div>
+          </div>
+          <div class="type_line"></div>
+          <div class="p_p_li">
+            <div class="p_p_info">
+              <div class="core icon_type_2">
+                <p>牛只保险</p>
+                <p>安全放心</p>
+              </div>
+            </div>
+          </div>
+          <div class="type_line" style="left: 62.3%;"></div>
+          <div class="p_p_li">
+            <div class="p_p_info">
+              <div class="core icon_type_3">
+                <p>智能分栏</p>
+                <p>便于管理</p>
+              </div>
+            </div>
+          </div>
+          <div class="p_p_li" style="margin-bottom: 0.1rem;">
+            <div class="p_p_info type_vertical">
+              <div class="core icon_type_4">
+                <p>航拍视频</p>
+                <p>实时监控</p>
+              </div>
+            </div>
+          </div>
+          <div class="type_line" style="top: 1.48rem;"></div>
+          <div class="p_p_li" style="margin-bottom: 0.1rem;">
+            <div class="p_p_info">
+              <div class="core icon_type_5">
+                <p>生态养殖</p>
+                <p>天然健康</p>
+              </div>
+            </div>
+          </div>
+          <div class="type_line" style="top: 1.48rem; left: 62.3%;"></div>
+          <div class="p_p_li" style="margin-bottom: 0.1rem;">
+            <div class="p_p_info type_vertical">
+              <div class="core icon_type_6">
+                <p>技术支持</p>
+                <p>信赖平台</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p_module">
+      <div class="p_m_title">
+        <span>交易规则</span>
+        <a href="{:url('page/detail')}?id=jiaoyiguize" class="look">查看详情 &gt;</a></div>
+      <div class="p_m_content">
+        <div class="p_flow">
+          <div class="p_f_item">
+            <p class="name">领养提交</p>
+            <div class="round icon_line"></div>
+            <p class="time">现在认领</p></div>
+          <div class="p_f_item">
+            <p class="name">入栏养殖</p>
+            <div class="round icon_line"></div>
+            <p class="time"><?php echo date('Y-m-d'); ?></p></div>
+          <div class="p_f_item">
+            <p class="name">出栏卖出</p>
+            <div class="round icon_line"></div>
+            <p class="time"><?php echo date('Y-m-d', (time() + $post['term'] * 3600 * 24)); ?></p></div>
+          <div class="p_f_item">
+            <p class="name"><font class="daoxu"><?php echo str_reversal('资金到账'); ?></font></p>
+            <div class="round"></div>
+            <p class="time"><?php echo date('Y-m-d', (time() + $post['term'] * 3600 * 24)); ?></p></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div style="height:60px;border-top:1px solid #efefef;z-index:99999;">
+    <div class="am-fixed am-fixed-bottom">
+        <div class="am-button-bottom-container">
+            <?php if ($post['status'] == 1) { echo '<button type="button" class="am-button white hover">已认领完</button>'; } else { ?>
+            <a href="{:url('project/buy')}?id=<?php echo $post['id']; ?>" class="am-button am-button-bottom-primary" style="background-color:#00cc9f;">{$post['min_buy_money']}元认领</a><?php } ?>
+        </div>
+    </div>
+</div>
+
+<div style="display:none;"><?php echo sysconfig('CMS_SITE_ANALYTICS'); ?></div>
+</body></html>

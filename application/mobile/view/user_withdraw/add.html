@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>提现</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/layer/mobile/layer.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">提现</span></div>
+    <div class="ds-in-bl nav_menu"><a href="<?php echo url('index'); ?>">提现记录</a></div>
+</div>
+</div>
+<style>
+.yongjin_tip{padding:10px 15px;background-color:#FFC;color:#666;border-bottom:1px solid #efefef;font-size:14px;}.yongjin_tip b{color:red;}
+</style>
+<div class="yongjin_tip">余额：<b>￥<?php echo $login_info['money']; ?></b>，提现最少金额：<b>￥<?php echo $min_withdraw_money; ?></b></div>
+
+<form class="ajax_post_submit" id="myform" method="post" action="{:url('user_withdraw/add')}" role="form">{:token()}
+
+<div class="am-list am-list-form" style="padding-bottom:0;">
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">提现时间</div>
+    <div class="am-list-control" style="color:#999;">8:00 ~ 24:00</div>
+  </div>
+  <div class="am-list-item am-input-autoclear">
+    <div class="am-list-label">提现银行</div>
+    <div class="am-list-control" style="color:#999;">{$login_info['bank_name']} <?php echo substr_replace($login_info['bank_card_number'],'********',4,8); ?></div>
+  </div>
+</div>
+
+<div class="am-edit-inpage" style="margin-top:10px;">
+    <div class="am-edit-title" style="font-size:18px;">提现金额</div>
+    <div class="am-edit-input am-input-autoclear" style="border-bottom:1px solid #eee;">
+        <span class="am-edit-input-yuan">¥</span>
+        <input placeholder="" id="money" name="money" class="am-edit-value" type="number" value="" autofocus="autofocus" onclick="window.event.stopPropagation();">
+        <div class="am-edit-clear"><i class="am-icon-clear am-icon clear-tiny" style="visibility: hidden;"></i></div>
+    </div>
+    <div class="am-edit-tips am-input-autoclear">
+	可提现金额：￥<span style="color:#f24724;"><?php if ( $is_withdraw == 1 ) { echo $login_info['money']; } else { echo '0'; } ?></span>元
+    </div>
+</div>
+
+<div class="am-list am-list-form" style="padding-bottom:0;">
+<div class="am-list-body">
+    <div class="am-list-item am-input-autoclear">
+        <div class="am-list-label"><font color="red">*</font>支付密码</div>
+        <div class="am-list-control">
+            <input id="pay_password" name="pay_password" type="password" placeholder="请输入支付密码" value="">
+        </div>
+        <?php if (!$login_info['pay_password']) { ?>
+        <div class="am-list-button">
+            <button type="button" onclick="javascript:location.href='{:url('user/user_pay_password_update')}'">去设置</button>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+</div>
+
+<div style="padding:15px 20px 15px 20px;"><a href="javascript:dosubmit();" class="am-button" role="button">确认提现</a></div>
+</form>
+
+<script>
+// 监听输入金额
+$(function(){
+    $('#money').bind('input propertychange', function() {
+        var money = $(this).val();
+        console.log('money', money);
+    });
+});
+
+function dosubmit()
+{
+	var money = $("#money").val();
+	var pay_password = $("#pay_password").val();
+	
+    if (money == '') {
+		layer.open({
+            content: '请输入提现金额'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+	
+	if (pay_password == '') {
+		layer.open({
+            content: '请输入支付密码'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+
+	if (money < <?php echo $min_withdraw_money; ?>) {
+		layer.open({
+            content: '提现金额不能小于<?php echo $min_withdraw_money; ?>元'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+	}
+
+	if (money > 10000000) {
+		layer.open({
+            content: '提现金额不合理'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        return false;
+	}
+
+    $("#myform").submit();
+}
+</script>
+</body></html>

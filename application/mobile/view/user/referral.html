@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8" />
+<title>邀请好友</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<script>
+var docEl = document.documentElement;
+docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+window.addEventListener('resize', function() {
+  docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+});
+</script>
+<link rel="stylesheet" href="/css/antui-all.css"/>
+<link rel="stylesheet" href="/css/mobile/style.css"/>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/qrcode.js"></script>
+{include file="common/header"/}
+</head>
+<body ontouchstart="" style="">
+
+<div class="classreturnbox">
+<div class="classreturn">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo http_host(); ?>/images/mobile/icon_return3.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span style="vertical-align:middle;">邀请好友</span></div>
+</div>
+</div>
+
+<style>
+.referral{padding:15px;background-color:#fff;}
+.referral .qrcode img,.referral .qrcode canvas{width:100%;height:auto;display:block;}
+.referral .title{color:#000;text-align:center;line-height:1.5;}
+.banner_tit{font-size:18px;font-weight:400;background-color:#fff;color:#f23030;height:46px;line-height:46px;padding-left:10px;padding-right:10px;border-bottom:1px solid #eee;border-top:10px solid #f1f1f1;text-align:center;}
+</style>
+<div class="referral">
+	<div class="title" style="font-size:22px;color:#000000;text-align:center;line-height:1.5;">个人专属推荐二维码</div>
+	<div><div id="qrcode" class="qrcode" style="width:60%;margin:10px auto;"></div></div>
+    <div class="title" style="font-size:14px;">扫一扫，轻松赚钱</div>
+    <script type="text/javascript">
+        //new QRCode(document.getElementById("qrcode"), "");  // 设置要生成二维码的链接
+        var qrcode = new QRCode('qrcode', {
+            text: "<?php echo url('login/register').'?invite_code=' . $login_info['mobile']; ?>",
+            width: '300',
+            height: '300',
+            colorDark : '#000000',
+            colorLight : '#ffffff',
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
+</div>
+
+<div class="banner_tit">我的推荐记录</div>
+<?php if ($list) { ?>
+<div class="am-list am-list-twoline" style="padding-top:0;">
+<?php foreach($list as $k=>$v){ ?>
+    <a href="javascript:;" class="am-list-item line-twoline">
+        <?php if (!empty($v['head_img'])) { ?><div class="am-list-thumb"><img src="<?php echo $v['head_img']; ?>" alt=""></div><?php } ?>
+        <div class="am-list-content">
+            <div class="am-list-title"><?php echo substr_replace($v['mobile'],'****',3,4); ?></div>
+            <div class="am-list-brief">注册时间：<?php echo date('Y-m-d',$v['add_time']); ?></div>
+        </div>
+    </a>
+<?php } ?>
+</div>
+<?php }else{ ?>
+    <div style="text-align:center;line-height:40px;color:#999;">暂无记录</div>
+<?php } ?>
+
+<script>
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $(".am-list").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最后一页，没有更多数据！");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加载中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $(".am-list").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最后一页，没有更多数据！");
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("点击加载更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("请求失败，请稍候再试！");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+
+</body></html>
