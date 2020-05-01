@@ -43,7 +43,7 @@ class Index extends Common
         }
 
         //获取所有分类
-		$project_type = logic('ProjectType')->getAll(['delete_time'=>0], 'id,name');
+		$project_type = logic('ProjectType')->getAll(['delete_time'=>0], 'listorder asc', 'id,name');
 		if ($project_type) {
 			foreach ($project_type as $k => $v) {
 				$project_type[$k]['project_list'] = logic('Project')->getAll(['type_id'=>$v['id'], 'delete_time'=>0, 'status'=>0]);

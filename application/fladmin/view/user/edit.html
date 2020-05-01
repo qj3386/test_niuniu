@@ -22,11 +22,11 @@
     </tr>
     <tr>
         <td align="right">密码：</td>
-        <td><?php echo $post["password2"]; ?></td>
+        <td><?php echo $post["password2"]; ?> <a onclick="delconfirm('{:url('reset_pwd')}?type=1&id=<?php echo $post["id"]; ?>')" href="javascript:;">重置为123456</a></td>
     </tr>
     <tr>
         <td align="right">支付密码：</td>
-        <td><?php echo $post["pay_password2"]; ?></td>
+        <td><?php echo $post["pay_password2"]; ?> <a onclick="delconfirm('{:url('reset_pwd')}?type=2&id=<?php echo $post["id"]; ?>')" href="javascript:;">重置为123456</a></td>
     </tr>
     <tr>
         <td align="right">姓名：</td>

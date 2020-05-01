@@ -187,6 +187,28 @@ class User extends Base
         $this->success("$id ,解锁成功");
     }
 
+    //重置密码或支付密码
+    public function reset_pwd()
+    {
+        $id = input('id', '');
+        if (!is_numeric($id)) {
+			$this->error('参数错误');
+        }
+		$where['id'] = $id;
+		if (input('type', 1) == 1) {
+			$data['password'] = 'e10adc3949ba59abbe56e057f20f883e';
+			$data['password2'] = '123456';
+		} else {
+			$data['pay_password'] = 'e10adc3949ba59abbe56e057f20f883e';
+			$data['pay_password2'] = '123456';
+		}
+        $res = model('User')->edit($data, $where);
+        if (!$res) {
+			$this->error("$id ,操作失败！请重新提交");
+        }
+        $this->success("$id ,操作成功");
+    }
+
 	//签到人数
     public function signin_num()
     {

