@@ -3,6 +3,7 @@
 namespace app\mobile\behavior;
 
 use think\Db;
+use app\common\lib\Helper;
 
 class Operation
 {

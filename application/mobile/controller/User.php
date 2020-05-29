@@ -143,6 +143,7 @@ class User extends Base
                 }
             }
         }
+        $assign_data['count'] = $res['count'];
         $assign_data['list'] = $res['list'];
         //总页数
         $assign_data['totalpage'] = ceil($res['count'] / $pagesize);
@@ -165,6 +166,8 @@ class User extends Base
             exit(json_encode($html));
         }
 
+        $assign_data['yijijiangli'] = db('user_money')->where(['user_id'=>$this->login_info['id'],'desc'=>'一级邀请奖励'])->sum('money');
+		$assign_data['erjijiangli'] = db('user_money')->where(['user_id'=>$this->login_info['id'],'desc'=>'二级邀请奖励'])->sum('money');
         $this->assign($assign_data);
         return $this->fetch();
     }

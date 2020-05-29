@@ -28,6 +28,7 @@
 <th>余额</th>
 <th>金额</th>
 <th>说明</th>
+<th>每次增减后面的金额</th>
 <th>时间</th>
 </tr></thead>
 <tbody>
@@ -37,6 +38,7 @@
 <td><?php echo $row['user']['money']; ?></td>
 <td><font<?php if ($row['type'] == 1) { echo ' color="#0C0"'; } else { echo ' color="red"'; } ?>><?php if ($row['type'] == 1) { echo '-'; } ?><?php echo $row['money']; ?></font></td>
 <td><?php echo $row['desc']; ?></td>
+<td><?php echo $row['user_money']; ?></td>
 <td><?php echo date('Y-m-d H:i:s', $row['add_time']); ?></td>
 </tr><?php }} ?>
 </tbody></table></div><!-- 表格结束 --></form><!-- 表单结束 -->

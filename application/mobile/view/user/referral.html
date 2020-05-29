@@ -28,6 +28,7 @@ window.addEventListener('resize', function() {
 </div>
 </div>
 
+<div><img src="/images/mobile/yaoqinghaoyou.jpg" style="width:100%;height:auto;"></div>
 <style>
 .referral{padding:15px;background-color:#fff;}
 .referral .qrcode img,.referral .qrcode canvas{width:100%;height:auto;display:block;}
@@ -51,7 +52,28 @@ window.addEventListener('resize', function() {
     </script>
 </div>
 
-<div class="banner_tit">我的推荐记录</div>
+<div class="am-grid am-grid-col-3" style="margin-top:10px;">
+  <a href="javascript:;" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title"><?php echo $count; ?></div>
+      <div class="am-grid-item-desc">邀请人数</div>
+    </div>
+  </a>
+  <a href="javascript:;" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title"><?php echo round($yijijiangli, 2); ?>元</div>
+      <div class="am-grid-item-desc">一级邀请奖励</div>
+    </div>
+  </a>
+  <a href="javascript:;" class="am-grid-item">
+    <div class="am-grid-item-content">
+      <div class="am-grid-item-title"><?php echo round($erjijiangli, 2); ?>元</div>
+      <div class="am-grid-item-desc">二级邀请奖励</div>
+    </div>
+  </a>
+</div>
+
+<div class="banner_tit">邀请列表</div>
 <?php if ($list) { ?>
 <div class="am-list am-list-twoline" style="padding-top:0;">
 <?php foreach($list as $k=>$v){ ?>
