@@ -102,15 +102,18 @@ var swiper = new Swiper('.swiper-container', {
 <?php if ($project_type) { ?>
 <div class="com_moduleList" style="">
 <?php foreach ($project_type as $k=>$v) { ?>
+<?php if (!empty($v['litpic'])) { echo '<a href="javascript:;" style="display:block;"><img src="' . $v['litpic'] . '" style="display:block;width:94%;height:auto;margin:0 auto;border-radius:20px;"></a>'; } ?>
 <div class="com_module"><div class="cml_title"><span><font style="vertical-align: inherit;"><?php echo $v['name']; ?></font></span></div>
 <div class="cml_content" style="padding-top: 0px;">
 <?php if ($v['project_list']) { foreach ($v['project_list'] as $key=>$value) { ?>
-<div class="com_mdoule"><a href="{:url('project/detail')}?id=<?php echo $value['id']; ?>" class="db"><div class="c_m_img"><img src="<?php echo $value['cover']; ?>"> <div class="c_m_i_name"><span class="icon_label type_1"><font style="vertical-align: inherit;"><?php echo $value['breed']; ?></font></span> <span class="icon_label type_2"><font style="vertical-align: inherit;"><?php echo $value['gender']; ?></font></span>
-</div></div> <div class="c_m_content"><div class="c_m_label"><img src="/images/mobile/5e7b1ed8bedc6.png"></div> <div class="c_m_item flex"><div class="info flex_2"><div class="price"><font style="vertical-align: inherit;">¥<?php echo round($value['min_buy_money'] * $value['daily_interest'] / 100, 2); ?></font></div> <div class="text"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal('培育预计日利润'); ?></font></div></div> <div class="info flex_1 type_2"><div class="price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $value['term']; ?>天</font></font></div> <div class="text"><font style="vertical-align: inherit;">饲养期</font></div></div></div>
-<!-- <div class="progressBox1" style="margin-bottom:.05rem;margin-top:0;">
-	<div class="progress1" style="width:<?php echo round($value['sale'] * 100 / ($value['sale'] + $value['stock']), 2); ?>%;background:#ff6600;"></div>
-	<span class="progressNum1" style="font-size:12px;left:30px;">已认领<?php echo intval($value['sale']); ?>头,剩余<?php echo $value['stock']; ?>头</span>
-</div> -->
+<div class="com_mdoule">
+<?php if (!empty($value['litpic'])) { echo '<a href="javascript:;" style="display:block;margin-bottom:10px;"><img src="' . $value['litpic'] . '" style="display:block;width:100%;height:auto;margin:0 auto;border-radius:20px;"></a>'; } ?>
+<a href="{:url('project/detail')}?id=<?php echo $value['id']; ?>" class="db"><div class="c_m_img"><img src="<?php echo $value['cover']; ?>"> <div class="c_m_i_name"><span class="icon_label type_1"><font style="vertical-align: inherit;"><?php echo $value['breed']; ?></font></span><span class="icon_label type_2"><font style="vertical-align: inherit;"><?php echo $value['gender']; ?></font></span></div></div>
+<div class="c_m_content"><div class="c_m_label"><img src="/images/mobile/5e7b1ed8bedc6.png"></div> <div class="c_m_item flex"><div class="info flex_2"><div class="price"><font style="vertical-align: inherit;">¥<?php echo round($value['min_buy_money'] * $value['daily_interest'] / 100, 2); ?></font></div> <div class="text"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal('培育预计日利润'); ?></font></div></div> <div class="info flex_1 type_2"><div class="price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $value['term']; ?>天</font></font></div> <div class="text"><font style="vertical-align: inherit;">饲养期</font></div></div></div>
+<div class="progressBox1" style="margin-bottom:.05rem;margin-top:0;">
+	<div class="progress1" style="width:<?php echo $value['progress']; ?>%;background:#00cc9f;"></div>
+	<span class="progressNum1" style="font-size:12px;left:30px;">领养进度:<?php echo $value['progress']; ?>%</span>
+</div>
 <div class="c_m_btn"><font style="vertical-align: inherit;" class="daoxu"><?php echo str_reversal($value['min_buy_money'] . '元认领'); ?></font></div></div></a></div>
 <?php } } ?></div></div><?php } ?></div><?php } ?>
 
