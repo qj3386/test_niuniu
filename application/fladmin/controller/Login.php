@@ -13,31 +13,28 @@ class Login extends Controller
      */
     public function index()
     {
+		if (Helper::isPostRequest()) {
+			//验证码验证
+			if (!captcha_check(input('captcha', null))) {
+				$this->error('验证码错误');
+			}
+
+			$data = input('post.');
+			$res = logic('Admin')->login($data);
+			if ($res['code'] === ReturnData::SUCCESS) {
+				session('admin_info', $res['data']);
+				$this->success('登录成功', url('fladmin/index/index'), '', 1);
+			}
+
+			$this->error($res['msg']);
+		}
+
         if (session('admin_info')) {
             header('Location: ' . url('fladmin/index/index'));
             exit;
         }
 
         return $this->fetch();
-    }
-
-    /**
-     * 登录处理页面
-     */
-    public function dologin()
-    {
-        //验证码验证
-        if (!captcha_check(input('captcha', null))) {
-            $this->error('验证码错误');
-        }
-
-        $res = logic('Admin')->login($_POST);
-        if ($res['code'] === ReturnData::SUCCESS) {
-            session('admin_info', $res['data']);
-            $this->success('登录成功', url('fladmin/index/index'), '', 1);
-        }
-
-        $this->error($res['msg']);
     }
 
     // 退出登录
